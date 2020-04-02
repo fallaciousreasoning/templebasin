@@ -39,14 +39,23 @@ export default <K extends keyof T & string, T>(props: Props<K, T>) => {
     switch (props.type) {
         case "check":
             contents = <FormControlLabel
-                control={<Checkbox checked={!!value} name={props.propertyName} onChange={e => onChanged(e.target.checked)} />}
+                control={<Checkbox
+                    checked={!!value}
+                    name={props.propertyName}
+                    onChange={e => onChanged(e.target.checked)} />}
                 label={props.label} />
             break;
         case "text":
-            contents = <TextField value={value as any} onChange={e => onChanged(e.target.value)} label={props.label} name={props.propertyName} />
+            contents = <TextField
+                error={!!errors.length}
+                value={value as any}
+                onChange={e => onChanged(e.target.value)}
+                label={props.label}
+                name={props.propertyName} />
             break;
         case "date":
             contents = <TextField value={value as any}
+                error={!!errors.length}
                 onChange={e => onChanged(e.target.value)}
                 label={props.label} name={props.propertyName}
                 type="date"
