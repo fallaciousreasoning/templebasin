@@ -9,6 +9,6 @@ export const getBookings = async () => {
         .then(snapshot => snapshot.val());
 }
 
-export const addBooking = async (booking: BookingInfo) => {
+export const makeBooking = async (booking: BookingInfo) => {
     return database.ref(bookingsPath).push(booking);
 }

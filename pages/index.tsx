@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Layout from '../components/Layout';
 import BookingEditor from '../components/BookingEditor';
-import { Paper, makeStyles } from '@material-ui/core';
+import { Paper, makeStyles, Button } from '@material-ui/core';
 import { useState } from 'react';
 import { BookingInfo } from '../model/bookingInfo';
 
@@ -21,6 +21,7 @@ const Home = () => {
     <Paper className={classes.root}>
       <form autoComplete="on">
         <BookingEditor booking={booking} onChanged={b => {setBooking(b); console.log(b)}} />
+        <Button variant="contained" color="primary">Submit</Button>
       </form>
     </Paper>
   </Layout>
