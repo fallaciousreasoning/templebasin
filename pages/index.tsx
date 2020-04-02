@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react';
 import { getBookings } from '../services/bookings';
+import Layout from '../components/Layout';
 
 const Home = () => {
   const [data, setData] = useState({});
@@ -8,13 +9,9 @@ const Home = () => {
     getBookings().then(setData);
   }, []);
 
-  return <div className="container">
-    <Head>
-      <title>Temple Basin Bookings</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+  return <Layout title="Book">
     {JSON.stringify(data)}
-  </div>
+  </Layout>
 }
 
 export default Home
