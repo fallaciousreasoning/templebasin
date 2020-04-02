@@ -6,4 +6,7 @@ export interface BookingInfo {
 
     owner: Guest;
     numGuests: number;
+
+    selfCatered: boolean;
+    includeLiftTickets: boolean;
 }
