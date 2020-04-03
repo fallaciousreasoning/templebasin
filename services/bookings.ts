@@ -15,6 +15,13 @@ export const getBooking = async (bookingId: string): Promise<BookingInfo> => {
         .then(snapshot => snapshot.val()) as Promise<BookingInfo>;
 }
 
-export const makeBooking = async (booking: BookingInfo) => {
-    return database.ref(bookingsPath).push(booking);
+export const updateBooking = async (booking: BookingInfo) => {
+    if (!booking.id) {
+        const result = await database.ref(bookingsPath).push(booking);
+        booking.id = result.key;
+    } else {
+        await database.ref(`${bookingsPath}/${booking.id}`).set(booking);
+    }
+
+    return booking.id;
 }
