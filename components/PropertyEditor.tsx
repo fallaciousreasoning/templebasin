@@ -73,7 +73,7 @@ export default <K extends keyof T & string, T>(props: Props<K, T>) => {
         case "number":
             contents = <TextField error={!!errors.length}
                 value={value as any || ""}
-                onChange={e => onChanged(e.target.value)}
+                onChange={e => onChanged(parseInt(e.target.value))}
                 label={props.label}
                 name={props.propertyName}
                 required={props.required}

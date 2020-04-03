@@ -38,7 +38,10 @@ export default async (req: ApiRequest<{ date: string }>, res: ServerResponse) =>
             if (!isOnDay(booking, day))
               continue;
 
-            const guests = 1 + booking.additionalGuests;
+            let guests = 1;
+            if (!isNaN(booking.additionalGuests))
+                guests += booking.additionalGuests;
+                
             dayInfo.roomsUsed += guests;
             
             if (!booking.selfCatered) {

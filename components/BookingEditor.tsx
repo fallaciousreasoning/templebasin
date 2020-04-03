@@ -62,5 +62,12 @@ export default (props: Props) => {
             label="Self Catered"
             propertyName="selfCatered"
         />
+        <PropertyEditor
+            onChange={onChanged}
+            type="number"
+            value={props.booking}
+            label="Additional Guests"
+            propertyName="additionalGuests"
+        />
     </>
 }
