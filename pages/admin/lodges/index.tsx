@@ -1,8 +1,8 @@
-import Layout from "../../components/Layout"
-import useData from "../../services/useData"
-import { Lodge } from "../../model/lodge"
+import Layout from "../../../components/Layout"
+import useData from "../../../services/useData"
+import { Lodge } from "../../../model/lodge"
 import { CircularProgress } from "@material-ui/core";
-import LodgeView from "../../components/LodgeView";
+import LodgeView from "../../../components/LodgeView";
 
 export default () => {
     const data = useData<Lodge[]>('/api/lodges');

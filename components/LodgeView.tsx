@@ -1,5 +1,5 @@
 import { Lodge } from "../model/lodge";
-import lodges from "../pages/lodges";
+import lodges from "../pages/admin/lodges";
 
 export default ({ lodge }: { lodge: Lodge }) => {
     return <div>
