@@ -33,6 +33,14 @@ export default (props: Props) => {
         <GuestEditor guest={props.booking.owner || {} as any} onChanged={ownerChanged} />
         <PropertyEditor
             onChange={props.onChanged}
+            type="date"
+            value={props.booking}
+            label="Start Date"
+            required
+            propertyName="startDate"
+        />
+        <PropertyEditor
+            onChange={props.onChanged}
             type="check"
             value={props.booking}
             label="Include Lift Tickets"
