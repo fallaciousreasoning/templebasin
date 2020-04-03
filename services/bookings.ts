@@ -1,5 +1,6 @@
 import { database } from "./firebase"
 import { BookingInfo } from "../model/bookingInfo";
+import book from "../pages/bookings/book";
 
 const bookingsPath = '/bookings';
 
@@ -16,12 +17,10 @@ export const getBooking = async (bookingId: string): Promise<BookingInfo> => {
 }
 
 export const updateBooking = async (booking: BookingInfo) => {
-    if (!booking.id) {
-        const result = await database.ref(bookingsPath).push(booking);
-        booking.id = result.key;
-    } else {
-        await database.ref(`${bookingsPath}/${booking.id}`).set(booking);
-    }
+    const id = booking.id || (await database.ref(bookingsPath).push()).key;
+    booking.id = id;
+    
+    await database.ref(`${bookingsPath}/${id}`).set(booking);
 
-    return booking.id;
+    return id;
 }

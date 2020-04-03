@@ -1,11 +1,12 @@
 import { RouteProps } from "../../../model/routeProps"
 import BookingEditor from "../../../components/BookingEditor"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { BookingInfo } from "../../../model/bookingInfo"
 import Layout from "../../../components/Layout"
 import Form from "../../../components/Form"
 import { CircularProgress, makeStyles } from "@material-ui/core"
-import { getBookings, getBooking } from "../../../services/bookings"
+import { getBookings, getBooking, updateBooking } from "../../../services/bookings"
+import SubmitButton from "../../../components/SubmitButton"
 
 const useStyles = makeStyles(theme => ({
     progress: {
@@ -21,11 +22,17 @@ export default (props: RouteProps<{ bookingId: string }>) => {
         getBooking(props.url.query.bookingId).then(setBooking);
     }, [props.url.query.bookingId]);
 
+    const saveBooking = useCallback(async () => updateBooking(booking), [booking]);
+    const content = booking
+        ? <>
+            <BookingEditor booking={booking} onChanged={setBooking}/>
+            <SubmitButton onSubmit={saveBooking}>Save</SubmitButton>
+        </>
+        : <CircularProgress className={classes.progress}/>
+
     return <Layout title="Edit Booking">
         <Form>
-            {booking
-                ? <BookingEditor booking={booking} onChanged={setBooking} />
-                : <CircularProgress className={classes.progress} variant='indeterminate'/>}
+            {content}
         </Form>
     </Layout>
 }
