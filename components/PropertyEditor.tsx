@@ -48,13 +48,13 @@ export default <K extends keyof T & string, T>(props: Props<K, T>) => {
         case "text":
             contents = <TextField
                 error={!!errors.length}
-                value={value as any}
+                value={value as any || ""}
                 onChange={e => onChanged(e.target.value)}
                 label={props.label}
                 name={props.propertyName} />
             break;
         case "date":
-            contents = <TextField value={value as any}
+            contents = <TextField value={value as any || ""}
                 error={!!errors.length}
                 onChange={e => onChanged(e.target.value)}
                 label={props.label} name={props.propertyName}
