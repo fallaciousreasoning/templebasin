@@ -2,14 +2,27 @@ import { database } from "./firebase"
 import { BookingInfo } from "../model/bookingInfo";
 import book from "../pages/bookings/book";
 import { useState, useEffect } from "react";
+import moment, { Moment } from 'moment';
 
 export const bookingsPath = '/bookings';
 
 export const getBookings = async () => {
     const bookings = database.ref(bookingsPath)
+        .orderByChild('startDate')
         .once('value')
         .then(snapshot => snapshot.val());
-    return Object.values(bookings);
+    return Object.values(bookings) as BookingInfo[];
+}
+
+export const getBookingsInRange = async (minDate: Moment, maxDate: Moment) => {
+    const bookings = await getBookings();
+    return bookings.filter(b => !moment(b.startDate).add(b.duration, 'days').isBefore(minDate)
+                                && !moment(b.startDate).isAfter(maxDate));
+}
+
+export const isOnDay = (booking: BookingInfo, day: Moment) => {
+    return moment(booking.startDate).isSameOrBefore(day)
+        && moment(booking.startDate).add(booking.duration, 'days').isSameOrAfter(day);
 }
 
 export const getBooking = async (bookingId: string): Promise<BookingInfo> => {
