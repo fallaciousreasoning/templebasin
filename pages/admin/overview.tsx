@@ -4,6 +4,7 @@ import moment from 'moment';
 import { makeStyles } from "@material-ui/core";
 import useData from "../../services/useData";
 import { DayInfo } from "../../model/dayInfo";
+import { useState } from "react";
 
 const localizer = momentLocalizer(moment);
 const views = {
@@ -17,7 +18,10 @@ const useStyles = makeStyles(theme => ({
 }));
 export default () => {
     const classes = useStyles();
-    const infos = useData<DayInfo[]>(`/api/bookings/${new Date().toJSON()}`);
+
+    const [date, setDate] = useState(moment());
+
+    const infos = useData<DayInfo[]>(`/api/bookings/${date.format('YYYY-MM-DD')}`);
 
     let events: DayInfo[] = [];
     if (infos) {
@@ -33,6 +37,7 @@ export default () => {
             views={views}
             className={classes.calendar}
             events={events || []}
-            localizer={localizer} />
+            localizer={localizer} 
+            onNavigate={date => setDate(moment(date))}/>
     </Layout>
 }
