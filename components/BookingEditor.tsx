@@ -20,20 +20,19 @@ interface Props {
     onChanged: (booking: BookingInfo) => void;
 }
 
-const validNights = [1,2,3,4,5,6,7];
+const validNights = [1, 2, 3, 4, 5, 6, 7];
 export default (props: Props) => {
     const classes = useStyles();
-    const onChanged = useCallback((update: Partial<BookingInfo>) => props.onChanged({ ...props.booking, ...update }), [props.booking, props.onChanged]);
-    const ownerChanged = useCallback((owner: Guest) => onChanged({ 
-        owner: { 
-            ...props.booking.owner,
-            ...owner
-        }}), [onChanged, props.booking.owner]);
+    const onChanged = useCallback((update: Partial<BookingInfo>) => props.onChanged({ ...props.booking, ...update }),
+        [props.booking, props.onChanged]);
+    const ownerChanged = useCallback((owner: Guest) => onChanged({
+        owner: owner
+    }), [onChanged]);
 
     return <>
         <GuestEditor guest={props.booking.owner || {} as any} onChanged={ownerChanged} />
         <PropertyEditor
-            onChange={props.onChanged}
+            onChange={onChanged}
             type="date"
             value={props.booking}
             label="Start Date"
@@ -41,7 +40,7 @@ export default (props: Props) => {
             propertyName="startDate"
         />
         <PropertyEditor
-            onChange={props.onChanged}
+            onChange={onChanged}
             type="select"
             options={validNights}
             value={props.booking}
@@ -50,14 +49,14 @@ export default (props: Props) => {
             propertyName="duration"
         />
         <PropertyEditor
-            onChange={props.onChanged}
+            onChange={onChanged}
             type="check"
             value={props.booking}
             label="Include Lift Tickets"
             propertyName="includeLiftTickets"
         />
         <PropertyEditor
-            onChange={props.onChanged}
+            onChange={onChanged}
             type="check"
             value={props.booking}
             label="Self Catered"

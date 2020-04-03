@@ -2,6 +2,7 @@ import { Guest } from "../model/guest"
 import TextField from '@material-ui/core/TextField';
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import PropertyEditor from "./PropertyEditor";
+import { useCallback } from "react";
 
 interface Props {
     guest: Guest;
@@ -9,18 +10,22 @@ interface Props {
 }
 
 export default (props: Props) => {
+    const onChanged = useCallback(update => {
+        props.onChanged({ ...props.guest, ...update });
+    }, [props.guest, props.onChanged]);
+
     return <>
         <PropertyEditor
             type="text"
             label="First Name"
-            onChange={props.onChanged}
+            onChange={onChanged}
             value={props.guest}
             propertyName="firstName"
             required />
         <PropertyEditor
             type="text"
             label="Last Name"
-            onChange={props.onChanged}
+            onChange={onChanged}
             value={props.guest}
             propertyName="lastName"
             required />
@@ -29,14 +34,14 @@ export default (props: Props) => {
         <PropertyEditor
             type="text"
             label="Email"
-            onChange={props.onChanged}
+            onChange={onChanged}
             value={props.guest}
             propertyName="email"
             required />
         <PropertyEditor
             type="text"
             label="Phone"
-            onChange={props.onChanged}
+            onChange={onChanged}
             value={props.guest}
             propertyName="phone"
             required />
@@ -44,7 +49,7 @@ export default (props: Props) => {
         <PropertyEditor
             type="date"
             label="Date of Birth"
-            onChange={props.onChanged}
+            onChange={onChanged}
             value={props.guest}
             propertyName="dateOfBirth"
             required />
@@ -52,13 +57,13 @@ export default (props: Props) => {
         <PropertyEditor
             type="check"
             label="Temple Basin Member"
-            onChange={props.onChanged}
+            onChange={onChanged}
             value={props.guest}
             propertyName="member" />
         <PropertyEditor
             type="check"
             label="Student"
-            onChange={props.onChanged}
+            onChange={onChanged}
             value={props.guest}
             propertyName="student" />
     </>

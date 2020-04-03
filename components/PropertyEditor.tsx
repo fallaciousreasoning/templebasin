@@ -7,7 +7,7 @@ type Props<K extends keyof T & string, T> = {
     required?: boolean;
 
     value: T;
-    onChange: (newValue: T) => void;
+    onChange: (newValue: Partial<T>) => void;
 
     validate?: (potentialValue: T[K]) => string[] | boolean;
 } & ({ type: 'text' } | { type: 'date' } | { type: 'check' } | { type: 'number' } | { type: 'select', options: (number | string)[] });
@@ -37,7 +37,7 @@ export default <K extends keyof T & string, T>(props: Props<K, T>) => {
         else setErrors(isValid);
 
         if (isValid === true || Array.isArray(isValid) && isValid.length === 0)
-            props.onChange({ ...props.value, [props.propertyName]: value });
+            props.onChange({ [props.propertyName]: value } as any);
     }, [props.propertyName, props.value, value])
 
     let contents: JSX.Element;
@@ -56,8 +56,8 @@ export default <K extends keyof T & string, T>(props: Props<K, T>) => {
                 value={value as any || ""}
                 onChange={e => onChanged(e.target.value)}
                 label={props.label}
-                name={props.propertyName} 
-                fullWidth/>
+                name={props.propertyName}
+                fullWidth />
             break;
         case "date":
             contents = <TextField value={value as any || ""}
@@ -68,7 +68,7 @@ export default <K extends keyof T & string, T>(props: Props<K, T>) => {
                 required={props.required}
                 InputLabelProps={{
                     shrink: true,
-                }} fullWidth/>
+                }} fullWidth />
             break;
         case "number":
             contents = <TextField error={!!errors.length}
@@ -83,7 +83,7 @@ export default <K extends keyof T & string, T>(props: Props<K, T>) => {
         case "select":
             contents = <FormControl fullWidth>
                 <InputLabel id={id}>{props.label}</InputLabel>
-                <Select labelId={id} value={value} required={props.required}>
+                <Select labelId={id} value={value} required={props.required} onChange={e => onChanged(e.target.value)}>
                     {props.options.map((option, i) => <MenuItem value={option} key={i}>
                         {option}
                     </MenuItem>)}
