@@ -20,6 +20,7 @@ interface Props {
     onChanged: (booking: BookingInfo) => void;
 }
 
+const validNights = [1,2,3,4,5,6,7];
 export default (props: Props) => {
     const classes = useStyles();
     const onChanged = useCallback((update: Partial<BookingInfo>) => props.onChanged({ ...props.booking, ...update }), [props.booking, props.onChanged]);
@@ -38,6 +39,15 @@ export default (props: Props) => {
             label="Start Date"
             required
             propertyName="startDate"
+        />
+        <PropertyEditor
+            onChange={props.onChanged}
+            type="select"
+            options={validNights}
+            value={props.booking}
+            label="Nights Stay"
+            required
+            propertyName="duration"
         />
         <PropertyEditor
             onChange={props.onChanged}

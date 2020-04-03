@@ -1,4 +1,4 @@
-import { FormControlLabel, Checkbox, TextField } from "@material-ui/core";
+import { FormControlLabel, Checkbox, TextField, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { useState, useEffect, useCallback } from "react";
 
 type Props<K extends keyof T & string, T> = {
@@ -10,13 +10,18 @@ type Props<K extends keyof T & string, T> = {
     onChange: (newValue: T) => void;
 
     validate?: (potentialValue: T[K]) => string[] | boolean;
-} & ({ type: 'text' } | { type: 'date' } | { type: 'check' });
+} & ({ type: 'text' } | { type: 'date' } | { type: 'check' } | { type: 'number' } | { type: 'select', options: (number | string)[] });
 
+let editorNumber = 1;
 export default <K extends keyof T & string, T>(props: Props<K, T>) => {
     const [value, setValue] = useState(props.value[props.propertyName]);
     useEffect(() => {
         setValue(props.value[props.propertyName]);
     }, [props.value, props.propertyName]);
+
+    const [idNum] = useState(editorNumber);
+    editorNumber = Math.max(editorNumber, idNum + 1);
+    const id = `property-editor-${idNum}`;
 
     const [errors, setErrors] = useState([]);
 
@@ -51,7 +56,8 @@ export default <K extends keyof T & string, T>(props: Props<K, T>) => {
                 value={value as any || ""}
                 onChange={e => onChanged(e.target.value)}
                 label={props.label}
-                name={props.propertyName} />
+                name={props.propertyName} 
+                fullWidth/>
             break;
         case "date":
             contents = <TextField value={value as any || ""}
@@ -59,9 +65,30 @@ export default <K extends keyof T & string, T>(props: Props<K, T>) => {
                 onChange={e => onChanged(e.target.value)}
                 label={props.label} name={props.propertyName}
                 type="date"
+                required={props.required}
                 InputLabelProps={{
                     shrink: true,
-                }}/>
+                }} fullWidth/>
+            break;
+        case "number":
+            contents = <TextField error={!!errors.length}
+                value={value as any || ""}
+                onChange={e => onChanged(e.target.value)}
+                label={props.label}
+                name={props.propertyName}
+                required={props.required}
+                type="number"
+                fullWidth />;
+            break;
+        case "select":
+            contents = <FormControl fullWidth>
+                <InputLabel id={id}>{props.label}</InputLabel>
+                <Select labelId={id} value={value} required={props.required}>
+                    {props.options.map((option, i) => <MenuItem value={option} key={i}>
+                        {option}
+                    </MenuItem>)}
+                </Select>
+            </FormControl>
             break;
     }
 
