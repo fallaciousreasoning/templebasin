@@ -1,13 +1,11 @@
-import {  } from "next/dist/client/router"
-import { RouteType } from "next/dist/lib/check-custom-routes"
-import { RouteProps } from "../../model/routeProps"
+import Layout from "../../components/Layout"
+import { useQuery } from "../../model/routeProps";
 
-interface Props extends RouteProps<{ bookingId: string }>  {
-
-}
-export default (props: Props) => {
-    return <div>
-        BookingId: {props.url.query.bookingId}
-        Viewing Booking: {JSON.stringify(props)}
-    </div>
-}
+export default () => {
+    const query = useQuery<{ bookingId: string }>();
+    
+    return <Layout title="View Booking">
+        BookingId: {query.bookingId}
+        Viewing Booking: {JSON.stringify(query)}
+    </Layout>
+};

@@ -1,4 +1,4 @@
-import { RouteProps } from "../../../model/routeProps"
+import { RouteProps, useQuery } from "../../../model/routeProps"
 import BookingEditor from "../../../components/BookingEditor"
 import { useState, useEffect, useCallback } from "react"
 import { BookingInfo } from "../../../model/bookingInfo"
@@ -14,13 +14,15 @@ const useStyles = makeStyles(theme => ({
         marginRight: 'auto'
     }
 }))
-export default (props: RouteProps<{ bookingId: string }>) => {
+export default () => {
     const classes = useStyles();
+    const query = useQuery<{ bookingId: string}>();
+
     const [booking, setBooking] = useState<BookingInfo>(undefined);
 
     useEffect(() => {
-        getBooking(props.url.query.bookingId).then(setBooking);
-    }, [props.url.query.bookingId]);
+        getBooking(query.bookingId).then(setBooking);
+    }, [query.bookingId]);
 
     const saveBooking = useCallback(async () => updateBooking(booking), [booking]);
     const content = booking
@@ -35,4 +37,4 @@ export default (props: RouteProps<{ bookingId: string }>) => {
             {content}
         </Form>
     </Layout>
-}
+};

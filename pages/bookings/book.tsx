@@ -1,20 +1,19 @@
-import Head from 'next/head'
-import Layout from '../../components/Layout';
+import { useRouter } from 'next/dist/client/router';
+import { useCallback, useState } from 'react';
 import BookingEditor from '../../components/BookingEditor';
-import { Paper, makeStyles, Button } from '@material-ui/core';
-import { useState, useCallback } from 'react';
-import { BookingInfo } from '../../model/bookingInfo';
 import Form from '../../components/Form';
-import { updateBooking } from '../../services/bookings';
-import { withRouter, Router } from 'next/dist/client/router';
+import Layout from '../../components/Layout';
 import SubmitButton from '../../components/SubmitButton';
+import { BookingInfo } from '../../model/bookingInfo';
+import { updateBooking } from '../../services/bookings';
 
 
-const Book = (props: { router: Router }) => {
+const Book = () => {
+    const router = useRouter();
     const [booking, setBooking] = useState<BookingInfo>({} as any);
     const submit = useCallback(async () => {
         const bookingId = await updateBooking(booking);
-        props.router.replace(`/bookings/edit/${bookingId}`);
+        router.replace(`/bookings/edit/${bookingId}`);
     }, [booking]);
     return <Layout title="Book">
         <Form>
@@ -24,4 +23,4 @@ const Book = (props: { router: Router }) => {
     </Layout >
 }
 
-export default withRouter(Book);
+export default Book;
