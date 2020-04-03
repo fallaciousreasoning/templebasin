@@ -7,6 +7,7 @@ import SubmitButton from "../../../components/SubmitButton"
 import { BookingInfo } from "../../../model/bookingInfo"
 import { useQuery } from "../../../model/routeProps"
 import { getBooking, updateBooking } from "../../../services/bookings"
+import { useRouter } from "next/dist/client/router"
 
 const useStyles = makeStyles(theme => ({
     progress: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles(theme => ({
 }))
 export default () => {
     const classes = useStyles();
+    const router = useRouter();
     const query = useQuery<{ bookingId: string}>();
 
     const [booking, setBooking] = useState<BookingInfo>(undefined);
@@ -24,7 +26,11 @@ export default () => {
         getBooking(query.bookingId).then(setBooking);
     }, [query.bookingId]);
 
-    const saveBooking = useCallback(async () => updateBooking(booking), [booking]);
+    const saveBooking = useCallback(async () => {
+        updateBooking(booking);
+        router.push(`/bookings/${query.bookingId}`);
+    }, [booking]);
+    
     const content = booking
         ? <>
             <BookingEditor booking={booking} onChanged={setBooking}/>

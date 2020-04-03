@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { AppBar, Toolbar, IconButton, makeStyles, Typography, Button } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, makeStyles, Typography, Button, Paper } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 interface Props {
@@ -10,6 +10,11 @@ interface Props {
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+    },
+    content: {
+        maxWidth: '800px',
+        margin: `${theme.spacing(1)}px auto`,
+        padding: `${theme.spacing(1)}px`
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -40,6 +45,8 @@ export default (props: Props) => {
                 </Typography>
             </Toolbar>
         </AppBar>
-        {props.children}
+        <Paper className={classes.content}>
+            {props.children}
+        </Paper>
     </div>;
 }
