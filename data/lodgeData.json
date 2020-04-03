@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Top Lodge",
+        "fillOrder": 0,
+        "preferStudents": false,
+        "occupancy": 61
+    },
+    {
+        "name": "Bottom Lodge",
+        "fillOrder": 1,
+        "preferStudents": true,
+        "occupancy": 45
+    }
+]

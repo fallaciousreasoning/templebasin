@@ -3,12 +3,13 @@ import { BookingInfo } from "../model/bookingInfo";
 import book from "../pages/bookings/book";
 import { useState, useEffect } from "react";
 
-const bookingsPath = '/bookings';
+export const bookingsPath = '/bookings';
 
 export const getBookings = async () => {
-    return database.ref(bookingsPath)
+    const bookings = database.ref(bookingsPath)
         .once('value')
         .then(snapshot => snapshot.val());
+    return Object.values(bookings);
 }
 
 export const getBooking = async (bookingId: string): Promise<BookingInfo> => {
