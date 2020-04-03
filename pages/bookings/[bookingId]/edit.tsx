@@ -1,12 +1,12 @@
-import { RouteProps, useQuery } from "../../../model/routeProps"
-import BookingEditor from "../../../components/BookingEditor"
-import { useState, useEffect, useCallback } from "react"
-import { BookingInfo } from "../../../model/bookingInfo"
-import Layout from "../../../components/Layout"
-import Form from "../../../components/Form"
 import { CircularProgress, makeStyles } from "@material-ui/core"
-import { getBookings, getBooking, updateBooking } from "../../../services/bookings"
+import { useCallback, useEffect, useState } from "react"
+import BookingEditor from "../../../components/BookingEditor"
+import Form from "../../../components/Form"
+import Layout from "../../../components/Layout"
 import SubmitButton from "../../../components/SubmitButton"
+import { BookingInfo } from "../../../model/bookingInfo"
+import { useQuery } from "../../../model/routeProps"
+import { getBooking, updateBooking } from "../../../services/bookings"
 
 const useStyles = makeStyles(theme => ({
     progress: {

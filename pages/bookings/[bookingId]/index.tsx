@@ -1,5 +1,5 @@
-import Layout from "../../components/Layout"
-import { useQuery } from "../../model/routeProps";
+import Layout from "../../../components/Layout"
+import { useQuery } from "../../../model/routeProps";
 
 export default () => {
     const query = useQuery<{ bookingId: string }>();

@@ -13,7 +13,7 @@ const Book = () => {
     const [booking, setBooking] = useState<BookingInfo>({} as any);
     const submit = useCallback(async () => {
         const bookingId = await updateBooking(booking);
-        router.replace(`/bookings/edit/${bookingId}`);
+        router.replace(`/bookings/${bookingId}`);
     }, [booking]);
     return <Layout title="Book">
         <Form>
