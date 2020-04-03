@@ -14,6 +14,7 @@ export default async (req: ApiRequest<{ date: string }>, res: ServerResponse) =>
     const minDate = moment(date).startOf('month');
     const maxDate = moment(date).endOf('month');
     const bookings = await getBookings();
+    console.log(JSON.stringify(bookings));
 
     const duration = moment(date).daysInMonth();
 

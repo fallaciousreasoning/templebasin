@@ -7,7 +7,7 @@ import moment, { Moment } from 'moment';
 export const bookingsPath = '/bookings';
 
 export const getBookings = async () => {
-    const bookings = database.ref(bookingsPath)
+    const bookings = await database.ref(bookingsPath)
         .orderByChild('startDate')
         .once('value')
         .then(snapshot => snapshot.val());
