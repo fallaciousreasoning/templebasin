@@ -11,4 +11,7 @@ export interface BookingInfo {
 
     selfCatered: boolean;
     includeLiftTickets: boolean;
+
+    lodge?: string;
+    startRoom?: number;
 }

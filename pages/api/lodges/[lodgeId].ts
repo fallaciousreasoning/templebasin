@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { json } from "../../../utils/readRequest";
+import { json } from "../../../utils/request";
 import { Lodge } from "../../../model/lodge";
 import { updateLodge } from "../../../services/lodges";
 import { ApiRequest } from "../../../model/apiRequest";

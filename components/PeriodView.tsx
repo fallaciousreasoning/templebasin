@@ -2,10 +2,11 @@ import moment, { Moment } from "moment";
 import { useState, useMemo, useCallback } from "react";
 import { ButtonGroup, Button } from "@material-ui/core";
 
-type Period = "day" | "week" | "month" | "year";
+export type Period = "day" | "week" | "month" | "year";
 
 interface Props {
-    periods?: Period[];
+    readonly periods?: Period[];
+
     children?: (min: Moment, max: Moment) => React.ReactNode;
 }
 
@@ -22,11 +23,11 @@ export default (props: Props) => {
     const to = useMemo(() => moment(date).endOf(period), [date, period]);
 
     return <div>
-    <ButtonGroup variant="contained" aria-label="contained primary button group">
+    {possiblePeriods.length !== 1 && <ButtonGroup variant="contained" aria-label="contained primary button group">
         {possiblePeriods.map(p => <Button key={p} color={period === p ? "primary" : "default"} onClick={() => setPeriod(p)}>
             {p}
         </Button>)}
-    </ButtonGroup>
+    </ButtonGroup>}
     <ButtonGroup>
         <Button onClick={prevPeriod}>Prev</Button>
         <Button onClick={nextPeriod}>Next</Button>

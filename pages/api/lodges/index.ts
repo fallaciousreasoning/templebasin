@@ -1,6 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http"
 import { database } from "../../../services/firebase";
 import { getLodges, updateLodge } from "../../../services/lodges";
+import { jsonResponse } from "../../../utils/response";
 
 const initializeLodges = async () => {
     for (const lodge of require('../../../data/lodgeData.json'))
@@ -18,5 +19,5 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     const lodges = await getLodges() || await initializeLodges();
 
     res.statusCode = 200;
-    res.end(JSON.stringify(lodges));
+    jsonResponse(lodges, res);
 }

@@ -7,7 +7,7 @@ export const getLodges = async () => {
     const data = await database.ref(lodgesPath)
         .once('value')
         .then(snapshot => snapshot.val());
-    return Object.values(data);
+    return Object.values(data) as Lodge[];
 }
 
 export const updateLodge = async (lodge: Lodge) => {

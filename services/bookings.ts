@@ -6,6 +6,10 @@ import moment, { Moment } from 'moment';
 
 export const bookingsPath = '/bookings';
 
+export const getNumGuests = (booking: BookingInfo) => {
+    return 1 + (isNaN(booking.additionalGuests) ? 0 : booking.additionalGuests);
+}
+
 export const getBookings = async () => {
     const bookings = await database.ref(bookingsPath)
         .orderByChild('startDate')
@@ -25,6 +29,8 @@ export const getBookingsInRange = async (minDate: Moment, maxDate: Moment) => {
         return !endsBefore && !startsAfter;
     });
 }
+
+export const getBookingsOnDay = async (day: Moment) => getBookingsInRange(moment(day).startOf('day'), moment(day).endOf('day'));
 
 export const isOnDay = (booking: BookingInfo, day: Moment) => {
     return moment(booking.startDate).isSameOrBefore(day)

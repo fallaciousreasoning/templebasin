@@ -3,6 +3,7 @@ import { ServerResponse } from "http";
 import { getBookingsInRange, isOnDay, getBookings } from "../../../services/bookings";
 import moment from "moment";
 import { DayInfo } from "../../../model/dayInfo";
+import { jsonResponse } from "../../../utils/response";
 
 export default async (req: ApiRequest<{ date: string }>, res: ServerResponse) => {
     if (req.method !== 'GET') {
@@ -64,6 +65,5 @@ export default async (req: ApiRequest<{ date: string }>, res: ServerResponse) =>
         dayInfos.push(dayInfo);
     }
 
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(dayInfos));
+    jsonResponse(dayInfos, res);
 }
