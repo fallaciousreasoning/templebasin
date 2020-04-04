@@ -7,6 +7,7 @@ import { DayInfo } from "../../model/dayInfo";
 import { useState } from "react";
 import { Doughnut, ChartData } from 'react-chartjs-2';
 import { BookingInfo } from "../../model/bookingInfo";
+import BookingTypeGraph from "../../components/BookingTypeGraph";
 
 const localizer = momentLocalizer(moment);
 const views = {
@@ -63,26 +64,7 @@ export default () => {
             </div>
             <div>
                 <h3>Booking Breakdown</h3>
-                <Doughnut data={{
-                    labels: [
-                        'DBB',
-                        'Self Catered',
-                        'Package'
-                    ],
-                    datasets: [{
-                        data: [periodInfo.dbb, periodInfo.selfCatered, periodInfo.packages],
-                        backgroundColor: [
-                            '#FF6384',
-                            '#36A2EB',
-                            '#FFCE56'
-                        ],
-                        hoverBackgroundColor: [
-                            '#FF6384',
-                            '#36A2EB',
-                            '#FFCE56'
-                        ]
-                    }]
-                }} />
+                <BookingTypeGraph {...periodInfo}/>
             </div>
         </>
     }
