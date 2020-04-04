@@ -43,14 +43,24 @@ export default () => {
                 prev.packages += guests;
             else prev.dbb += guests;
 
+            if (moment(next.startDate).isSameOrAfter(from))
+                prev.checkins++;
+            if (moment(next.startDate).add(next.duration, 'days').isSameOrBefore(to))
+                prev.checkouts++;
+
             return prev;
         }, {
             dbb: 0,
             selfCatered: 0,
             packages: 0,
+            checkins: 0,
+            checkouts: 0
         });
 
         content = <>
+            <div>
+                <b>Checkins:</b> {periodInfo.checkins} <b>Checkouts:</b> {periodInfo.checkouts}
+            </div>
             <div>
                 <h3>Booking Breakdown</h3>
                 <Doughnut data={{
