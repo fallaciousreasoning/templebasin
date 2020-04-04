@@ -6,15 +6,19 @@ export type Period = "day" | "week" | "month" | "year";
 
 interface Props {
     readonly periods?: Period[];
+    defaultPeriod?: Period;
 
     children?: (min: Moment, max: Moment) => React.ReactNode;
 }
 
 export default (props: Props) => {
     const possiblePeriods = props.periods || ['day', 'week', 'month', 'year'];
+    const defaultPeriod = props.defaultPeriod || "month";
+    if (!possiblePeriods.includes(defaultPeriod))
+        throw new Error(`Period ${defaultPeriod} is not in ${JSON.stringify(possiblePeriods)} (try specifying a default period)`);
 
     const [date, setDate] = useState(moment());
-    const [period, setPeriod] = useState<Period>("month");
+    const [period, setPeriod] = useState<Period>(defaultPeriod);
 
     const nextPeriod = useCallback(() => setDate(moment(date).add(1, period)), [date, period]);
     const prevPeriod = useCallback(() => setDate(moment(date).subtract(1, period)), [date, period]);
