@@ -1,14 +1,12 @@
-import Layout from "../../components/Layout"
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { makeStyles } from "@material-ui/core";
 import moment, { Moment } from 'moment';
-import { makeStyles, ButtonGroup, Button, CircularProgress } from "@material-ui/core";
-import useData from "../../services/useData";
-import { DayInfo } from "../../model/dayInfo";
-import { useState } from "react";
-import { Doughnut, ChartData } from 'react-chartjs-2';
-import { BookingInfo } from "../../model/bookingInfo";
+import { momentLocalizer } from 'react-big-calendar';
 import BookingTypeGraph from "../../components/BookingTypeGraph";
+import Layout from "../../components/Layout";
+import Loader from "../../components/Loader";
 import PeriodView from "../../components/PeriodView";
+import { BookingInfo } from "../../model/bookingInfo";
+import useData from "../../services/useData";
 
 const localizer = momentLocalizer(moment);
 const views = {
@@ -27,7 +25,7 @@ const possibleViews = ["day", "week", "month", "year"] as const;
 const renderGraphs = (from: Moment, to: Moment) => {
     const infos = useData<BookingInfo[]>(`/api/bookings?from=${from.format('YYYY-MM-DD')}&to=${to.format('YYYY-MM-DD')}`);
     if (!infos)
-        return <CircularProgress />
+        return <Loader />
 
     const periodInfo = infos.reduce((prev, next) => {
         const guests = 1 + (isNaN(next.additionalGuests) ? 0 : next.additionalGuests);

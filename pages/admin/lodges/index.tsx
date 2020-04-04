@@ -1,14 +1,14 @@
-import Layout from "../../../components/Layout"
-import useData from "../../../services/useData"
-import { Lodge } from "../../../model/lodge"
-import { CircularProgress } from "@material-ui/core";
+import Layout from "../../../components/Layout";
+import Loader from "../../../components/Loader";
 import LodgeView from "../../../components/LodgeView";
+import { Lodge } from "../../../model/lodge";
+import useData from "../../../services/useData";
 
 export default () => {
     const data = useData<Lodge[]>('/api/lodges');
     return <Layout title="Lodges">
         {!data
-            ? <CircularProgress />
+            ? <Loader />
             : data.map(lodge => <LodgeView lodge={lodge} key={lodge.id} />)}
     </Layout>
 }

@@ -1,13 +1,14 @@
-import { CircularProgress, makeStyles } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core"
+import { useRouter } from "next/dist/client/router"
 import { useCallback, useEffect, useState } from "react"
 import BookingEditor from "../../../components/BookingEditor"
 import Form from "../../../components/Form"
 import Layout from "../../../components/Layout"
+import Loader from "../../../components/Loader"
 import SubmitButton from "../../../components/SubmitButton"
 import { BookingInfo } from "../../../model/bookingInfo"
 import { useQuery } from "../../../model/routeProps"
 import { getBooking, updateBooking } from "../../../services/bookings"
-import { useRouter } from "next/dist/client/router"
 
 const useStyles = makeStyles(theme => ({
     progress: {
@@ -36,7 +37,7 @@ export default () => {
             <BookingEditor booking={booking} onChanged={setBooking}/>
             <SubmitButton onSubmit={saveBooking}>Save</SubmitButton>
         </>
-        : <CircularProgress className={classes.progress}/>
+        : <Loader className={classes.progress}/>
 
     return <Layout title="Edit Booking">
         <Form>

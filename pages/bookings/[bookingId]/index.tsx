@@ -1,10 +1,8 @@
-import Layout from "../../../components/Layout"
-import { useQuery } from "../../../model/routeProps";
-import { Paper, CircularProgress, Button } from "@material-ui/core";
-import { useBooking } from "../../../services/bookings";
-import { useCallback } from "react";
-import { useRouter } from "next/dist/client/router";
 import BookingView from "../../../components/BookingView";
+import Layout from "../../../components/Layout";
+import Loader from "../../../components/Loader";
+import { useQuery } from "../../../model/routeProps";
+import { useBooking } from "../../../services/bookings";
 
 export default () => {
     const query = useQuery<{ bookingId: string }>();
@@ -12,7 +10,7 @@ export default () => {
 
     const content = booking
         ? <BookingView booking={booking} />
-        : <CircularProgress />;
+        : <Loader />;
 
     return <Layout title="View Booking">
         {content}

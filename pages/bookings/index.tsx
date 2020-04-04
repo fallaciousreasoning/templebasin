@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react"
-import { getBookings } from "../../services/bookings";
-import Layout from "../../components/Layout";
+import { useEffect, useState } from "react";
 import BookingView from "../../components/BookingView";
-import { CircularProgress } from "@material-ui/core";
+import Layout from "../../components/Layout";
+import Loader from "../../components/Loader";
+import { getBookings } from "../../services/bookings";
 
 export default () => {
     const [bookings, setBookings] = useState([]);
@@ -14,7 +14,7 @@ export default () => {
             <BookingView booking={b} />
             <hr />
         </div>)
-            : <CircularProgress />}
+            : <Loader />}
 
     </Layout>
 }

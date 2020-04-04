@@ -1,9 +1,9 @@
 import { Moment } from "moment";
 import Layout from "../../components/Layout";
+import Loader from "../../components/Loader";
 import PeriodView, { Period } from "../../components/PeriodView";
-import useData from "../../services/useData";
 import { BookingInfo } from "../../model/bookingInfo";
-import { CircularProgress } from "@material-ui/core";
+import useData from "../../services/useData";
 
 const periods: Period[] = ['day'];
 
@@ -11,7 +11,8 @@ const renderRooms = (day: Moment) => {
     const bookings = useData<BookingInfo[]>(`/api/bookings?on=${day.format('YYYY-MM-DD')}`);
 
     if (!bookings)
-        return <CircularProgress/>;
+        return <Loader/>;
+
     return <div>
 
     </div>;
