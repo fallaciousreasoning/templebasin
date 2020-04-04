@@ -5,6 +5,10 @@ import moment, { Moment } from "moment";
 import queryString from 'query-string';
 import { jsonResponse } from "../../../utils/response";
 
+// request should be either of the form:
+//   /bookings?from=YYYY-MM-DD&to=YYYY-MM-DD
+// or
+//   /bookings?on=YYYY-MM-DD
 export default async (req: ApiRequest, res: ServerResponse) => {
     const query = queryString.parseUrl(req.url).query;
 
