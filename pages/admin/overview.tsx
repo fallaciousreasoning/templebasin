@@ -31,16 +31,25 @@ const renderGraphs = (from: Moment, to: Moment) => {
 
     const periodInfo = infos.reduce((prev, next) => {
         const guests = 1 + (isNaN(next.additionalGuests) ? 0 : next.additionalGuests);
+        const checkoutDate = moment(next.startDate).add(next.duration, 'days');
+        const checkinDate = moment(next.startDate);
+
         if (next.selfCatered)
             prev.selfCatered += guests;
         else if (next.includeLiftTickets)
             prev.packages += guests;
         else prev.dbb += guests;
 
-        if (moment(next.startDate).isSameOrAfter(from))
-            prev.checkins++;
-        if (moment(next.startDate).add(next.duration, 'days').isSameOrBefore(to))
-            prev.checkouts++;
+        if (checkinDate.isSameOrAfter(from))
+            prev.checkins += guests;
+        if (checkoutDate.isSameOrBefore(to))
+            prev.checkouts += guests;
+        
+        const firstDay = moment.max(checkinDate, from);
+        const lastDay = moment.min(checkoutDate, to);
+        const diff = lastDay.diff(firstDay, 'days') + 1;
+        if (diff > 0)
+            prev.bedNights += diff * guests;
 
         return prev;
     }, {
@@ -48,10 +57,14 @@ const renderGraphs = (from: Moment, to: Moment) => {
         selfCatered: 0,
         packages: 0,
         checkins: 0,
-        checkouts: 0
+        checkouts: 0,
+        bedNights: 0
     });
 
     return <>
+        <div>
+            <b>Bed Nights:</b> {periodInfo.bedNights}
+        </div>
         <div>
             <b>Checkins:</b> {periodInfo.checkins} <b>Checkouts:</b> {periodInfo.checkouts}
         </div>
