@@ -4,7 +4,7 @@ import Layout from "../../components/Layout";
 import BookingView from "../../components/BookingView";
 import { CircularProgress } from "@material-ui/core";
 
-export default (props) => {
+export default () => {
     const [bookings, setBookings] = useState([]);
     useEffect(() => {
         getBookings().then(bookings => setBookings(bookings));

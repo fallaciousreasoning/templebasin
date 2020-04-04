@@ -16,8 +16,8 @@ export const getBookings = async () => {
 
 export const getBookingsInRange = async (minDate: Moment, maxDate: Moment) => {
     const bookings = await getBookings();
-    return bookings.filter(b => !moment(b.startDate).add(b.duration, 'days').isBefore(minDate)
-                                && !moment(b.startDate).isAfter(maxDate));
+    return bookings.filter(b => !moment(b.startDate).add(b.duration, 'days').isSameOrBefore(minDate)
+                                && !moment(b.startDate).isSameOrAfter(maxDate));
 }
 
 export const isOnDay = (booking: BookingInfo, day: Moment) => {

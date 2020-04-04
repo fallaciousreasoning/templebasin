@@ -14,8 +14,6 @@ export default async (req: ApiRequest<{ date: string }>, res: ServerResponse) =>
     const minDate = moment(date).startOf('month');
     const maxDate = moment(date).endOf('month');
     const bookings = await getBookings();
-    console.log(JSON.stringify(bookings));
-
     const duration = moment(date).daysInMonth();
 
     const dayInfos: DayInfo[] = [];
@@ -30,8 +28,10 @@ export default async (req: ApiRequest<{ date: string }>, res: ServerResponse) =>
 
             roomsUsed: 0,
 
-            start: day.startOf('day').toJSON(),
-            end: day.endOf('day').toJSON()
+            checkins: 0,
+            checkouts: 0,
+
+            day: day.startOf('day').toJSON(),
         }
 
         for (const booking of bookings) {
@@ -41,18 +41,22 @@ export default async (req: ApiRequest<{ date: string }>, res: ServerResponse) =>
             let guests = 1;
             if (!isNaN(booking.additionalGuests))
                 guests += booking.additionalGuests;
-                
+
             dayInfo.roomsUsed += guests;
             
             if (!booking.selfCatered) {
-                // No breakfast on start day.
-                if (!day.isSame(booking.startDate, 'day'))
+                if (!day.isSame(booking.startDate, 'day')) {
+                    // No breakfast on start day.
                     dayInfo.breakfasts++;
+                    dayInfo.checkins++;
+                }
                 dayInfo.lunches++;
 
-                // No dinner on last day.
-                if (!day.isSame(moment(booking.startDate).add(booking.duration, 'days')))
+                if (!day.isSame(moment(booking.startDate).add(booking.duration, 'days'))) {
+                    // No dinner on last day.
                     dayInfo.dinners++;
+                    dayInfo.checkouts++;
+                }
             }
         }
 
