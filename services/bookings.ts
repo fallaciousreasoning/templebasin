@@ -3,6 +3,7 @@ import { BookingInfo } from "../model/bookingInfo";
 import book from "../pages/bookings/book";
 import { useState, useEffect } from "react";
 import moment, { Moment } from 'moment';
+import { assignRoom } from "./room";
 
 export const bookingsPath = '/bookings';
 
@@ -15,6 +16,9 @@ export const getBookings = async () => {
         .orderByChild('startDate')
         .once('value')
         .then(snapshot => snapshot.val());
+
+    if (!bookings)
+        return [];
     return Object.values(bookings) as BookingInfo[];
 }
 
@@ -59,6 +63,10 @@ export const useBooking = (bookingId: string) => {
 }
 
 export const updateBooking = async (booking: BookingInfo) => {
+    if (!booking.id) {
+        await assignRoom(booking);
+    }
+
     const id = booking.id || (await database.ref(bookingsPath).push()).key;
     booking.id = id;
 
