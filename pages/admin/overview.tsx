@@ -19,8 +19,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-type Views = "day" | "month" | "year"
-const possibleViews = ["day", "month", "year"] as const;
+type Views = "day" | "week" | "month" | "year"
+const possibleViews = ["day", "week", "month", "year"] as const;
 
 export default () => {
     const classes = useStyles();
