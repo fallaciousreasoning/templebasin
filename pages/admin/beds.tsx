@@ -8,6 +8,7 @@ import PeriodView, { Period } from "../../components/PeriodView";
 import { BedInfo } from "../../model/bedInfo";
 import { Lodge } from "../../model/lodge";
 import useData from "../../services/useData";
+import { OccupancyInfo } from "../../model/occupancyInfo";
 
 const periods: Period[] = ['day'];
 
@@ -32,39 +33,9 @@ const roomColumns: { title: string, field: string, type?: string }[] = [
 
 const renderRooms = (day: Moment) => {
     const classes = useStyles();
-    const bedInfo = useData<BedInfo[]>(`/api/beds?on=${day.format('YYYY-MM-DD')}`);
-    const lodges = useData<Lodge[]>('/api/lodges');
-    const occupancy = useMemo(() => {
-        if (!lodges || !bedInfo)
-            return [];
-
-        const result: {
-            [key: string]: {
-                id: string;
-                name: string;
-                occupancy: number;
-                occupied: number;
-            }
-        } = {};
-
-        for (const lodge of lodges)
-            result[lodge.id] = { id: lodge.id, occupancy: lodge.occupancy, occupied: 0, name: lodge.name };
-
-        for (const night of bedInfo) {
-            result[night.lodgeId].occupied += night.guests;
-        }
-
-        const resultArray = Object.values(result);
-        const total = {
-            id: 'total',
-            name: 'Total',
-            occupancy: lodges.map(l => l.occupancy).reduce((prev, next) => prev + next, 0),
-            occupied: resultArray.map(l => l.occupied).reduce((prev, next) => prev + next, 0)
-        };
-        resultArray.push(total);
-
-        return resultArray;
-    }, [bedInfo, lodges]);
+    const on = day.format('YYYY-MM-DD');
+    const bedInfo = useData<BedInfo[]>(`/api/beds?on=${on}`);
+    const occupancy = useData<OccupancyInfo[]>(`/api/occupancy?on=${on}`) || [];
 
     if (!bedInfo)
         return <Loader />;

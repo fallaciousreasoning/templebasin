@@ -43,6 +43,8 @@ export const getBookingsInRange = async (minDate: Moment, maxDate: Moment) => {
 
 export const getBookingsOnDay = async (day: Moment) => getBookingsInRange(moment(day).startOf('day'), moment(day).endOf('day'));
 
+export const notCheckingOutOn = (day: Moment) => (booking: BookingInfo) => !getCheckoutDate(booking).isSame(day, 'day');
+
 export const isOnDay = (booking: BookingInfo, day: Moment) => {
     return moment(booking.startDate).isSameOrBefore(day)
         && moment(booking.startDate).add(booking.duration, 'days').isSameOrAfter(day);
