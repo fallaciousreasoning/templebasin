@@ -63,6 +63,9 @@ export default (props: Props) => {
                     <ListItem button>
                         <ListItemText primary={<Link href="/admin/overview">Overview</Link>}/>
                     </ListItem>
+                    <ListItem>
+                        <ListItemText primary={<Link href="/admin/beds">Beds</Link>}/>
+                    </ListItem>
                     <ListItem button>
                         <ListItemText primary={<Link href="/bookings">Bookings</Link>}/>
                     </ListItem>
