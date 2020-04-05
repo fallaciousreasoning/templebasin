@@ -7,6 +7,7 @@ import { jsonResponse } from "../../utils/response";
 import { getLodges } from "../../services/lodges";
 import { Lodge } from "../../model/lodge";
 import { BedInfo } from "../../model/bedInfo";
+import range from "../../utils/range";
 
 // Request should look like this:
 //    //   /beds?on=YYYY-MM-DD
@@ -27,7 +28,8 @@ export default async (req: ApiRequest, res: ServerResponse) => {
         lodge: lodgeMap[b.lodge].name,
         lodgeId: b.lodge,
         startRoom: b.startRoom + 1,
-        endRoom: b.startRoom + getNumGuests(b)
+        endRoom: b.startRoom + getNumGuests(b),
+        rooms: range(b.startRoom + 1, b.startRoom + getNumGuests(b) + 1).join(', ')
     }));
 
     jsonResponse(bedInfos, res);

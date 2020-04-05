@@ -7,4 +7,5 @@ export interface BedInfo {
     guests: number;
     startRoom: number;
     endRoom: number;
+    rooms: string;
 }

@@ -1,15 +1,13 @@
-import moment, { Moment } from "moment";
+import { makeStyles } from "@material-ui/core";
+import MaterialTable from 'material-table';
+import { Moment } from "moment";
+import { useMemo } from "react";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import PeriodView, { Period } from "../../components/PeriodView";
-import { BookingInfo } from "../../model/bookingInfo";
-import useData from "../../services/useData";
-import { TextField, makeStyles, Paper } from "@material-ui/core";
-import { useState, useMemo } from "react";
-import MaterialTable from 'material-table';
-import { getNumGuests } from "../../services/bookings";
-import { Lodge } from "../../model/lodge";
 import { BedInfo } from "../../model/bedInfo";
+import { Lodge } from "../../model/lodge";
+import useData from "../../services/useData";
 
 const periods: Period[] = ['day'];
 
@@ -29,8 +27,7 @@ const roomColumns: { title: string, field: string, type?: string }[] = [
     { title: 'Owner', field: 'owner' },
     { title: 'Guests', field: 'guests' },
     { title: 'Lodge', field: 'lodge' },
-    { title: 'First Room', field: 'startRoom' },
-    { title: 'Last Room', field: 'endRoom' }
+    { title: 'Rooms', field: 'rooms' },
 ];
 
 const renderRooms = (day: Moment) => {
