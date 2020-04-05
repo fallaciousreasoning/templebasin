@@ -9,6 +9,7 @@ import { useState, useMemo } from "react";
 import MaterialTable from 'material-table';
 import { getNumGuests } from "../../services/bookings";
 import { Lodge } from "../../model/lodge";
+import { BedInfo } from "../../model/bedInfo";
 
 const periods: Period[] = ['day'];
 
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 const roomColumns: { title: string, field: string, type?: string }[] = [
     { title: "Checkin", field: 'checkin' },
     { title: "Checkout", field: 'checkout' },
-    { title: 'Owner', field: 'name' },
+    { title: 'Owner', field: 'owner' },
     { title: 'Guests', field: 'guests' },
     { title: 'Lodge', field: 'lodge' },
     { title: 'First Room', field: 'startRoom' },
@@ -34,32 +35,15 @@ const roomColumns: { title: string, field: string, type?: string }[] = [
 
 const renderRooms = (day: Moment) => {
     const classes = useStyles();
-    const bookings = useData<BookingInfo[]>(`/api/bookings?on=${day.format('YYYY-MM-DD')}`);
-    const lodges = useData<Lodge[]>(`/api/lodges`);
-    const lodgesMap = useMemo(() => (lodges || []).reduce((prev, next) => ({ ...prev, [next.id]: next }), {} as { [key: string]: Lodge }), [lodges]);
+    const bedInfo = useData<BedInfo[]>(`/api/beds?on=${day.format('YYYY-MM-DD')}`);
     
-    const rooms = useMemo(() => {
-        if (!bookings)
-          return [];
-
-        return bookings.map(b => ({
-            checkin: moment(b.startDate).format('DD-MM-YYYY'),
-            checkout: moment(b.startDate).add(b.duration, 'days').format('DD-MM-YYYY'),
-            name: `${b.owner.firstName} ${b.owner.lastName}`,
-            guests: getNumGuests(b),
-            lodge: (lodgesMap[b.lodge] || {}).name,
-            startRoom: b.startRoom,
-            endRoom: b.startRoom + getNumGuests(b) - 1
-        }));
-    }, [bookings, lodgesMap]);
-
-    if (!bookings)
+    if (!bedInfo)
         return <Loader />;
 
     return <div className={classes.rooms}>
         <MaterialTable
             columns={roomColumns as any}
-            data={rooms}
+            data={bedInfo}
             title="Beds" />
     </div>;
 }

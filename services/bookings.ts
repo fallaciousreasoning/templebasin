@@ -10,6 +10,14 @@ export const getNumGuests = (booking: BookingInfo) => {
     return 1 + (isNaN(booking.additionalGuests) ? 0 : booking.additionalGuests);
 }
 
+export const getCheckinDate = (booking: BookingInfo) => {
+    return moment(booking.startDate);
+}
+
+export const getCheckoutDate = (booking: BookingInfo) => {
+    return getCheckinDate(booking).add(booking.duration, 'days');
+}
+
 export const getBookings = async () => {
     const bookings = await database.ref(bookingsPath)
         .orderByChild('startDate')
