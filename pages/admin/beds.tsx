@@ -36,11 +36,39 @@ const roomColumns: { title: string, field: string, type?: string }[] = [
 const renderRooms = (day: Moment) => {
     const classes = useStyles();
     const bedInfo = useData<BedInfo[]>(`/api/beds?on=${day.format('YYYY-MM-DD')}`);
-    
+    const lodges = useData<Lodge[]>('/api/lodges');
+    const occupancy = useMemo(() => {
+        if (!lodges || !bedInfo)
+            return [];
+
+        const result: {
+            [key: string]: {
+                id: string;
+                name: string;
+                occupancy: number;
+                occupied: number;
+            }
+        } = {};
+
+        for (const lodge of lodges)
+            result[lodge.id] = { id: lodge.id, occupancy: lodge.occupancy, occupied: 0, name: lodge.name };
+
+        for (const night of bedInfo) {
+            result[night.lodgeId].occupied += night.guests;
+        }
+
+        return Object.values(result);
+    }, [bedInfo, lodges]);
+
     if (!bedInfo)
         return <Loader />;
 
     return <div className={classes.rooms}>
+        <div>
+            {occupancy.map(o => <div key={o.id}>
+                <b>{o.name}:</b> {o.occupied}/{o.occupancy} rooms occupied.
+            </div>)}
+        </div>
         <MaterialTable
             columns={roomColumns as any}
             data={bedInfo}

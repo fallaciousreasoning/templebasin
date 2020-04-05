@@ -3,6 +3,7 @@ export interface BedInfo {
     checkin: string;
     checkout: string;
     lodge: string;
+    lodgeId: string;
     guests: number;
     startRoom: number;
     endRoom: number;

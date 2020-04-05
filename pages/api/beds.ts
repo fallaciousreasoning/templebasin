@@ -25,7 +25,8 @@ export default async (req: ApiRequest, res: ServerResponse) => {
         checkin: getCheckinDate(b).format('DD-MM-YYYY'),
         checkout: getCheckoutDate(b).format('DD-MM-YYYY'),
         lodge: lodgeMap[b.lodge].name,
-        startRoom: b.startRoom,
+        lodgeId: b.lodge,
+        startRoom: b.startRoom + 1,
         endRoom: b.startRoom + getNumGuests(b)
     }));
 
