@@ -54,7 +54,16 @@ const renderRooms = (day: Moment) => {
             result[night.lodgeId].occupied += night.guests;
         }
 
-        return Object.values(result);
+        const resultArray = Object.values(result);
+        const total = {
+            id: 'total',
+            name: 'Total',
+            occupancy: lodges.map(l => l.occupancy).reduce((prev, next) => prev + next, 0),
+            occupied: resultArray.map(l => l.occupied).reduce((prev, next) => prev + next, 0)
+        };
+        resultArray.push(total);
+
+        return resultArray;
     }, [bedInfo, lodges]);
 
     if (!bedInfo)
