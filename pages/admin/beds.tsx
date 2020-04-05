@@ -22,13 +22,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const RoomCard = (props: { booking: BookingInfo }) => {
-    const classes = useStyles();
-    return <Paper className={classes.room}>
-        <h3>Booking for {props.booking.owner.firstName} {props.booking.owner.lastName}</h3>
-        {props.booking.owner.firstName} {props.booking.owner.lastName}
-    </Paper>;
-}
 const roomColumns: { title: string, field: string, type?: string }[] = [
     { title: "Checkin", field: 'checkin' },
     { title: "Checkout", field: 'checkout' },
@@ -64,16 +57,15 @@ const renderRooms = (day: Moment) => {
         return <Loader />;
 
     return <div className={classes.rooms}>
-
         <MaterialTable
             columns={roomColumns as any}
             data={rooms}
-            title="Room Allocations" />
+            title="Beds" />
     </div>;
 }
 
 export default () => {
-    return <Layout title="Rooms">
+    return <Layout title="Beds">
         <PeriodView periods={periods} defaultPeriod='day'>
             {renderRooms}
         </PeriodView>
