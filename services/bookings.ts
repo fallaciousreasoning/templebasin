@@ -1,6 +1,5 @@
 import { database } from "./firebase"
 import { BookingInfo } from "../model/bookingInfo";
-import book from "../pages/bookings/book";
 import { useState, useEffect } from "react";
 import moment, { Moment } from 'moment';
 import { assignRoom } from "./room";

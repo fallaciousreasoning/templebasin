@@ -8,6 +8,7 @@ import { TextField, makeStyles, Paper } from "@material-ui/core";
 import { useState, useMemo } from "react";
 import MaterialTable from 'material-table';
 import { getNumGuests } from "../../services/bookings";
+import { Lodge } from "../../model/lodge";
 
 const periods: Period[] = ['day'];
 
@@ -41,6 +42,9 @@ const roomColumns: { title: string, field: string, type?: string }[] = [
 const renderRooms = (day: Moment) => {
     const classes = useStyles();
     const bookings = useData<BookingInfo[]>(`/api/bookings?on=${day.format('YYYY-MM-DD')}`);
+    const lodges = useData<Lodge[]>(`/api/lodges`);
+    const lodgesMap = useMemo(() => (lodges || []).reduce((prev, next) => ({ ...prev, [next.id]: next }), {} as { [key: string]: Lodge }), [lodges]);
+    
     const rooms = useMemo(() => {
         if (!bookings)
           return [];
@@ -50,11 +54,11 @@ const renderRooms = (day: Moment) => {
             checkout: moment(b.startDate).add(b.duration, 'days').format('DD-MM-YYYY'),
             name: `${b.owner.firstName} ${b.owner.lastName}`,
             guests: getNumGuests(b),
-            lodge: b.lodge,
+            lodge: (lodgesMap[b.lodge] || {}).name,
             startRoom: b.startRoom,
             endRoom: b.startRoom + getNumGuests(b) - 1
         }));
-    }, [bookings]);
+    }, [bookings, lodgesMap]);
 
     if (!bookings)
         return <Loader />;
