@@ -35,7 +35,7 @@ const renderRooms = (day: Moment) => {
     const classes = useStyles();
     const on = day.format('YYYY-MM-DD');
     const bedInfo = useData<BedInfo[]>(`/api/beds?on=${on}`);
-    const occupancy = useData<OccupancyInfo[]>(`/api/occupancy?on=${on}`) || [];
+    const occupancy = useData<OccupancyInfo[]>(`/api/occupancy?on=${on}`, []);
 
     if (!bedInfo)
         return <Loader />;

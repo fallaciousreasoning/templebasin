@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import moment, { Moment } from 'moment';
-import { momentLocalizer } from 'react-big-calendar';
 import BookingTypeGraph from "../../components/BookingTypeGraph";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
+import OccupancyBreakdown from "../../components/OccupancyBreakdown";
 import PeriodView from "../../components/PeriodView";
 import { BookingInfo } from "../../model/bookingInfo";
 import useData from "../../services/useData";
@@ -69,6 +69,8 @@ const renderGraphs = (from: Moment, to: Moment) => {
         <div>
             <h3>Booking Breakdown</h3>
             <BookingTypeGraph {...periodInfo} />
+            <h3>Occupancy by Lodge</h3>
+            <OccupancyBreakdown from={from} to={to}/>
         </div>
     </>;
 }
