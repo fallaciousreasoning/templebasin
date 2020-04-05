@@ -7,11 +7,7 @@ import Loader from "../../components/Loader";
 import PeriodView from "../../components/PeriodView";
 import { BookingInfo } from "../../model/bookingInfo";
 import useData from "../../services/useData";
-
-const localizer = momentLocalizer(moment);
-const views = {
-    month: true,
-};
+import round from "../../utils/round";
 
 const useStyles = makeStyles(theme => ({
     calendar: {
@@ -56,12 +52,16 @@ const renderGraphs = (from: Moment, to: Moment) => {
         packages: 0,
         checkins: 0,
         checkouts: 0,
-        bedNights: 0
+        bedNights: 0,
+        numNights: to.diff(from, 'days') + 1
     });
 
     return <>
         <div>
             <b>Bed Nights:</b> {periodInfo.bedNights}
+        </div>
+        <div>
+            <b>Average beds used a night:</b> {round(periodInfo.bedNights/periodInfo.numNights, 2)} (over {periodInfo.numNights} nights)
         </div>
         <div>
             <b>Checkins:</b> {periodInfo.checkins} <b>Checkouts:</b> {periodInfo.checkouts}
