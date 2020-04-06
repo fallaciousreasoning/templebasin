@@ -5,6 +5,7 @@ import BookingEditor from '../../components/BookingEditor';
 import Layout from '../../components/Layout';
 import { BookingInfo } from '../../model/bookingInfo';
 import { updateBooking } from '../../services/bookings';
+import { noLodgeChoice } from '../../model/lodge';
 
 const initialBooking: BookingInfo = {
     startDate: moment().add(1, 'day').format('YYYY-MM-DD'),
@@ -23,7 +24,7 @@ const initialBooking: BookingInfo = {
     selfCatered: false,
     includeLiftTickets: true,
 
-    preferredLodge: 'None',
+    preferredLodge: noLodgeChoice,
     additionalComments: '',
 };
 const Book = () => {

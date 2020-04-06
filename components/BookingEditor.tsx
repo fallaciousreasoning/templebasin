@@ -3,10 +3,12 @@ import { Field, Formik, Form, useFormikContext } from "formik";
 import { TextField } from 'formik-material-ui';
 import { BookingInfo, bookingSchema } from "../model/bookingInfo";
 import LabeledCheckbox from "./LabeledCheckbox";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { Guest, newGuest, accomodationCategories, dietaryRequirements } from "../model/guest";
 import DeleteIcon from '@material-ui/icons/Delete';
 import FormSelect from "./FormSelect";
+import useData from "../services/useData";
+import { Lodge, useLodges, noLodgeChoice } from "../model/lodge";
 
 interface Props {
     initialValue: BookingInfo;
@@ -99,6 +101,10 @@ export default (props: Props) => {
         setSubmitting(false);
     }, [props.onSubmit]);
 
+    const lodges = useLodges();
+    const lodgeChoices = useMemo(() => [{ name: noLodgeChoice, id: noLodgeChoice }, ...lodges], [lodges]);
+    console.log(lodgeChoices);
+
     return <Formik
         initialValues={props.initialValue}
         validationSchema={bookingSchema}
@@ -143,12 +149,15 @@ export default (props: Props) => {
             <Field component={LabeledCheckbox}
                 type="checkbox"
                 label="Include Lift Tickets"
-                name="includeLiftTickets"
-            />
+                name="includeLiftTickets" />
             <Field component={LabeledCheckbox}
                 type="checkbox"
                 label="Self Catered"
-                name="selfCatered"
+                name="selfCatered" />
+            <Field component={FormSelect}
+                label="Preferred Lodge"
+                name="preferredLodge"
+                values={lodgeChoices}
             />
             <Button
                 variant='contained'

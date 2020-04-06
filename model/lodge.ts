@@ -1,3 +1,5 @@
+import useData from "../services/useData"
+
 export interface Lodge {
     id?: string;
     name: string;
@@ -5,3 +7,9 @@ export interface Lodge {
     fillOrder: number;
     preferStudents: boolean;
 }
+
+export const useLodges = () => {
+    return useData<Lodge[]>('/api/lodges', []);
+}
+
+export const noLodgeChoice = 'None' as const;

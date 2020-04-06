@@ -3,10 +3,12 @@ import { fieldToCheckbox, CheckboxWithLabelProps } from 'formik-material-ui'
 import { useCallback, useMemo, useState } from "react";
 import { useFormikContext } from "formik";
 
-type Props ={
+type Props = {
     values: string[];
     field: { name: string };
     label: string;
+    renderOption?: (option: string) => React.ReactNode;
+    renderValue?: (value: string | string[]) => React.ReactNode;
 } & ({
     field: {
         value: string;
@@ -19,10 +21,14 @@ type Props ={
 
 let nextId: number;
 
-const renderValue = (selected: string | string[]) => {
+const defaultRenderValue = (selected: string | string[]) => {
     selected = Array.isArray(selected) ? selected : [selected];
     return selected.join(', ');
 }
+
+const defaultRenderOption = (option: string) => <MenuItem value={option}>
+    {option}
+</MenuItem>;
 
 export default (props: Props & SelectProps) => {
     const { values, field: { name, value }, label, ...other } = props;
@@ -33,6 +39,9 @@ export default (props: Props & SelectProps) => {
         context.setFieldValue(name, e.target.value);
     }, [name]);
 
+    const renderValue = props.renderValue || defaultRenderValue;
+    const renderOption = props.renderOption || defaultRenderOption;
+
     return <div>
         <FormControl fullWidth>
             <InputLabel id={id}>{label}</InputLabel>
@@ -42,11 +51,8 @@ export default (props: Props & SelectProps) => {
                 labelId={id}
                 value={value}
                 onChange={onChange}
-                renderValue={renderValue}
-            >
-                {values.map(v => <MenuItem key={v} value={v}>
-                    {v}
-                </MenuItem>)}
+                renderValue={renderValue}>
+                {values.map(renderOption)}
             </Select>
         </FormControl>
     </div>
