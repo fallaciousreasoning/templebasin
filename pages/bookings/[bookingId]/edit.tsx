@@ -27,16 +27,13 @@ export default () => {
         getBooking(query.bookingId).then(setBooking);
     }, [query.bookingId]);
 
-    const saveBooking = useCallback(async () => {
-        updateBooking(booking);
+    const saveBooking = useCallback(async (booking) => {
+        await updateBooking(booking);
         router.push(`/bookings/${query.bookingId}`);
     }, [booking]);
     
     const content = booking
-        ? <>
-            <BookingEditor booking={booking} onChanged={setBooking}/>
-            <SubmitButton onSubmit={saveBooking}>Save</SubmitButton>
-        </>
+        ? <BookingEditor initialValue={booking} onSubmit={saveBooking}/>
         : <Loader className={classes.progress}/>
 
     return <Layout title="Edit Booking">
