@@ -17,6 +17,56 @@ export default (props: Props) => {
         validateOnBlur
         onSubmit={props.onChanged}>
         {({ submitForm, isSubmitting }) => <Form>
+
+            <Field
+                component={TextField}
+                name="owner.firstName"
+                type="text"
+                label="First Name"
+                fullWidth
+            />
+            <Field
+                component={TextField}
+                type="text"
+                label="Last Name"
+                name="owner.lastName"
+                fullWidth
+            />
+
+            <Field
+                component={TextField}
+                type="email"
+                label="Email"
+                name="owner.email"
+                fullWidth />
+
+            <Field
+                component={TextField}
+                type="text"
+                label="Phone"
+                name="owner.phone"
+                fullWidth
+            />
+
+            <Field
+                component={TextField}
+                type="date"
+                label="Date of Birth"
+                name="owner.dateOfBirth"
+                fullWidth
+            />
+
+            <Field
+                component={LabeledCheckbox}
+                type="checkbox"
+                label="Temple Basin Member"
+                name="owner.member" />
+            <Field
+                component={LabeledCheckbox}
+                type="checkbox"
+                label="Student"
+                name="owner.student" />
+
             <Field component={TextField}
                 type="date"
                 label="Start Date"
@@ -34,20 +84,16 @@ export default (props: Props) => {
                 name="additionalGuests"
                 fullWidth />
 
-            <div>
-                <Field component={LabeledCheckbox}
-                    type="checkbox"
-                    label="Include Lift Tickets"
-                    name="includeLiftTickets"
-                />
-            </div>
-            <div>
-                <Field component={LabeledCheckbox}
-                    type="checkbox"
-                    label="Self Catered"
-                    name="selfCatered"
-                />
-            </div>
+            <Field component={LabeledCheckbox}
+                type="checkbox"
+                label="Include Lift Tickets"
+                name="includeLiftTickets"
+            />
+            <Field component={LabeledCheckbox}
+                type="checkbox"
+                label="Self Catered"
+                name="selfCatered"
+            />
             <Button
                 variant='contained'
                 color='primary'

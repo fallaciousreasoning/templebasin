@@ -9,8 +9,10 @@ export default (props: CheckboxWithLabelProps & { label: string }) => {
 
     const convertedProps = useMemo(() => fieldToCheckbox(props), [props]);
 
-    return <FormControlLabel
-        control={<Checkbox
-            {...convertedProps} />}
-        label={props.label} />
+    return <div>
+        <FormControlLabel
+            control={<Checkbox
+                {...convertedProps} />}
+            label={props.label} />
+    </div>
 }
