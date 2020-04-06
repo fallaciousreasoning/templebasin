@@ -18,6 +18,9 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(1),
         marginBottom: theme.spacing(1),
     },
+    singleGuestEditor: {
+        marginBottom: theme.spacing(1)
+    },
     guestHeader: {
         width: '100%',
         display: 'flex',
@@ -42,15 +45,15 @@ const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
         setFieldValue('guests', newGuests);
     }, [setFieldValue, guests]);
 
-    const canRemove = guests.length > 1;
+    const onlyGuest = guests.length === 1;
 
-    return <Paper elevation={2} className={styles.guestEditor}>
-        <div className={styles.guestHeader}>
+    const content = <>
+        {!onlyGuest && <div className={styles.guestHeader}>
             <h3>Guest {props.guestNum + 1}</h3>
-            {canRemove && <IconButton onClick={removeGuest} disabled={isSubmitting}>
+            <IconButton onClick={removeGuest} disabled={isSubmitting}>
                 <DeleteIcon />
-            </IconButton>}
-        </div>
+            </IconButton>
+        </div>}
         <Field
             component={TextField}
             name={field('name')}
@@ -79,7 +82,15 @@ const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
             multiple
             name={field('dietaryRequirements')}
             values={dietaryRequirements} />
-    </Paper>;
+    </>;
+
+    return onlyGuest
+        ? <div className={styles.singleGuestEditor}>
+            {content}
+        </div>
+        : <Paper elevation={2} className={styles.guestEditor}>
+            {content}
+        </Paper>;
 }
 
 export default (props: Props) => {
