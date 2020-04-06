@@ -36,8 +36,6 @@ export default () => {
         : <Loader className={classes.progress} />
 
     return <Layout title="Edit Booking">
-        <Form>
-            {content}
-        </Form>
+        {content}
     </Layout>
 };
