@@ -37,6 +37,8 @@ export default async (req: ApiRequest, res: ServerResponse) => {
 
         // Respond with an empty list of validation errors.
         jsonResponse([], res);
+
+        throw new Error("This is a thing")
     } catch (err) {
         err = Array.isArray(err) ? err : [err];
         return error(err, res);

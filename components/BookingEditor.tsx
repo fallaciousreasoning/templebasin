@@ -8,6 +8,7 @@ import { accomodationCategories, dietaryRequirements, Guest, newGuest } from "..
 import { noLodgeChoice, useLodges } from "../model/lodge";
 import FormSelect from "./FormSelect";
 import LabeledCheckbox from "./LabeledCheckbox";
+import debounce from "../utils/debounce";
 
 interface Props {
     initialValue: BookingInfo;
@@ -96,6 +97,22 @@ const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
             {content}
         </Paper>;
 }
+
+const validateBookingOnServer = async (booking: BookingInfo) => {
+    const result = await fetch('/api/booking/canBook', {
+        method: 'POST',
+        body: JSON.stringify(booking)
+    });
+
+    const data = await result.json();
+
+    if (data)
+        return { duration: "No available rooms!" }
+
+    return {}
+}
+
+const debouncedValidateBookingOnServer = debounce(validateBookingOnServer, 500);
 
 export default (props: Props) => {
     const styles = useStyles();
