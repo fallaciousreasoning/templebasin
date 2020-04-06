@@ -8,6 +8,7 @@ import PeriodView from "../../components/PeriodView";
 import { BookingInfo } from "../../model/bookingInfo";
 import useData from "../../services/useData";
 import round from "../../utils/round";
+import { getNumGuests } from "../../services/bookings";
 
 const useStyles = makeStyles(theme => ({
     calendar: {
@@ -24,7 +25,7 @@ const renderGraphs = (from: Moment, to: Moment) => {
         return <Loader />
 
     const periodInfo = infos.reduce((prev, next) => {
-        const guests = 1 + (isNaN(next.additionalGuests) ? 0 : next.additionalGuests);
+        const guests = getNumGuests(next);
         const checkoutDate = moment(next.startDate).add(next.duration, 'days');
         const checkinDate = moment(next.startDate);
 
