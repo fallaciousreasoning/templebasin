@@ -1,7 +1,7 @@
-import { FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem, SelectProps, Chip } from "@material-ui/core"
-import { fieldToCheckbox, CheckboxWithLabelProps } from 'formik-material-ui'
-import { useCallback, useMemo, useState } from "react";
+import { FormControl, InputLabel, MenuItem, Select, SelectProps } from "@material-ui/core";
 import { useFormikContext } from "formik";
+import { useCallback, useState } from "react";
+import React from "react";
 
 type Props = {
     values: string[];
@@ -51,8 +51,9 @@ export default (props: Props & SelectProps) => {
                 labelId={id}
                 value={value}
                 onChange={onChange}
-                renderValue={renderValue}>
-                {values.map(renderOption)}
+                renderValue={renderValue}
+                disabled={props.disabled || context.isSubmitting}>
+                {values.map(option => <React.Fragment key={option}>{renderOption(option)}</React.Fragment>)}
             </Select>
         </FormControl>
     </div>

@@ -1,14 +1,13 @@
-import { Button, Paper, makeStyles, IconButton } from "@material-ui/core";
-import { Field, Formik, Form, useFormikContext } from "formik";
-import { TextField } from 'formik-material-ui';
-import { BookingInfo, bookingSchema } from "../model/bookingInfo";
-import LabeledCheckbox from "./LabeledCheckbox";
-import { useCallback, useMemo } from "react";
-import { Guest, newGuest, accomodationCategories, dietaryRequirements } from "../model/guest";
+import { Button, IconButton, makeStyles, MenuItem, Paper } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Field, Form, Formik, useFormikContext } from "formik";
+import { TextField } from 'formik-material-ui';
+import { useCallback, useMemo } from "react";
+import { BookingInfo, bookingSchema } from "../model/bookingInfo";
+import { accomodationCategories, dietaryRequirements, Guest, newGuest } from "../model/guest";
+import { noLodgeChoice, useLodges } from "../model/lodge";
 import FormSelect from "./FormSelect";
-import useData from "../services/useData";
-import { Lodge, useLodges, noLodgeChoice } from "../model/lodge";
+import LabeledCheckbox from "./LabeledCheckbox";
 
 interface Props {
     initialValue: BookingInfo;
@@ -33,6 +32,9 @@ const useStyles = makeStyles(theme => ({
             alignSelf: 'flex-end',
             flex: 0
         }
+    },
+    submitButton: {
+        marginTop: theme.spacing(1)
     }
 }));
 
@@ -96,14 +98,20 @@ const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
 }
 
 export default (props: Props) => {
+    const styles = useStyles();
+
     const submit = useCallback(async (value, { setSubmitting }) => {
         await props.onSubmit(value);
         setSubmitting(false);
     }, [props.onSubmit]);
 
     const lodges = useLodges();
-    const lodgeChoices = useMemo(() => [{ name: noLodgeChoice, id: noLodgeChoice }, ...lodges], [lodges]);
-    console.log(lodgeChoices);
+    const lodgeChoices = useMemo(() => [noLodgeChoice, ...lodges.map(l => l.id)], [lodges]);
+    const lodgeMap = useMemo(() => lodges.reduce((prev, next) => ({ ...prev, [next.id]: next.name }), { [noLodgeChoice]: noLodgeChoice }), [lodges]);
+    const renderLodge = useCallback(lodge => lodgeMap[lodge], [lodgeMap]);
+    const renderLodgeOption = useCallback(lodge => <MenuItem value={lodge}>
+        {lodgeMap[lodge]}
+    </MenuItem>, [lodgeMap]);
 
     return <Formik
         initialValues={props.initialValue}
@@ -158,8 +166,12 @@ export default (props: Props) => {
                 label="Preferred Lodge"
                 name="preferredLodge"
                 values={lodgeChoices}
+                renderValue={renderLodge}
+                renderOption={renderLodgeOption}
             />
+
             <Button
+                className={styles.submitButton}
                 variant='contained'
                 color='primary'
                 onClick={submitForm}>

@@ -1,15 +1,11 @@
 import { makeStyles } from "@material-ui/core"
 import { useRouter } from "next/dist/client/router"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback } from "react"
 import BookingEditor from "../../../components/BookingEditor"
-import Form from "../../../components/Form"
 import Layout from "../../../components/Layout"
 import Loader from "../../../components/Loader"
-import SubmitButton from "../../../components/SubmitButton"
-import { BookingInfo } from "../../../model/bookingInfo"
 import { useQuery } from "../../../model/routeProps"
-import { getBooking, updateBooking, useBooking } from "../../../services/bookings"
-import useData from "../../../services/useData"
+import { useBooking } from "../../../services/bookings"
 
 const useStyles = makeStyles(theme => ({
     progress: {
