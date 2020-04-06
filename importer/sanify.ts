@@ -1,4 +1,14 @@
+import { BookingInfo } from "../model/bookingInfo";
+import { Guest } from "../model/guest";
+
 const fs = require('fs');
+
+const dayWidth = 6;
+const startColumn = 2;
+
+interface IntermediateResult {
+    [day: number]: BookingInfo[];
+}
 
 const getLines = (): string[] => {
     return fs.readFileSync('importer/data.csv', 'utf-8').split('\n');
@@ -41,6 +51,69 @@ function* onlyRoomInfo(rows: string[]): Iterable<string> {
             continue;
         yield rows[i];
     }
+}
+
+const parseType = (type: string): Partial<BookingInfo> => {
+    type = type.toLowerCase() as 'dbb' | 'sc' | 'pack';
+
+    switch (type) {
+        case "dbb":
+            return {
+                selfCatered: false,
+                includeLiftTickets: false
+            };
+        case "sc":
+            return {
+                selfCatered: true,
+                includeLiftTickets: false
+            };
+        case "pack":
+            return {
+                selfCatered: false,
+                includeLiftTickets: true
+            }
+    }
+
+    throw new Error(`Encountered unknown booking type '${type}'`);
+}
+
+const isProbablySameGuest = (g1: Guest, g2: Guest) => {
+    // The easy case.
+    if (g1.name === g2.name)
+        return true;
+
+    // TODO: First Last {N}
+
+    return false;
+}
+
+const parseBooking = (day: number, rowNumber: number, columnNumber: number, columns: string[]) => {
+    const guest = parseGuest(rowNumber, columnNumber, columns);
+}
+
+const parseGuest = (rowNumber: number, firstColumn: number, columns: string[]) => {
+    const readData = (offset: number) => columns[firstColumn + offset];
+
+    const columnHeadings = [
+        "Name",
+        "Type",
+        "Notes",
+        "Paid",
+        "Room",
+        "Status"
+    ];
+
+    const guest: Guest = {
+        name: readData(0),
+        category: 'Adult',
+        clubMember: false,
+        dietaryRequirements: []
+    };
+
+    return {
+        ...guest,
+        ...parseType(readData(1))
+    };
 }
 
 const lines = onlyRoomInfo(getLines());
