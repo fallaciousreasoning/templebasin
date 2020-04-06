@@ -4,8 +4,9 @@ import { TextField } from 'formik-material-ui';
 import { BookingInfo, bookingSchema } from "../model/bookingInfo";
 import LabeledCheckbox from "./LabeledCheckbox";
 import { useCallback } from "react";
-import { Guest, newGuest } from "../model/guest";
+import { Guest, newGuest, accomodationCategories } from "../model/guest";
 import DeleteIcon from '@material-ui/icons/Delete';
+import FormSelect from "./FormSelect";
 
 interface Props {
     initialValue: BookingInfo;
@@ -57,6 +58,13 @@ const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
             label="Name"
             fullWidth
         />
+
+        <Field
+            component={FormSelect}
+            label="Accomodation Category"
+            name={field('category')}
+            values={accomodationCategories}
+            fullWidth/>
 
         <Field
             component={LabeledCheckbox}

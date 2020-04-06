@@ -8,7 +8,7 @@ enum DietaryRequirement {
     'Gluten Free',
     'Lactose Intolerant'
 };
-const dietaryRequirements = enumValues(DietaryRequirement);
+export const dietaryRequirements = enumValues(DietaryRequirement);
 
 enum AccomodationCategory {
     'Under 13',
@@ -16,7 +16,7 @@ enum AccomodationCategory {
     'Student',
     'Adult'
 };
-const accomodationCategories = enumValues(AccomodationCategory);
+export const accomodationCategories = enumValues(AccomodationCategory);
 
 export interface Guest {
     name: string;
