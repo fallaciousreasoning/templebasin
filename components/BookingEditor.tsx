@@ -4,7 +4,7 @@ import { TextField } from 'formik-material-ui';
 import { BookingInfo, bookingSchema } from "../model/bookingInfo";
 import LabeledCheckbox from "./LabeledCheckbox";
 import { useCallback } from "react";
-import { Guest, newGuest, accomodationCategories } from "../model/guest";
+import { Guest, newGuest, accomodationCategories, dietaryRequirements } from "../model/guest";
 import DeleteIcon from '@material-ui/icons/Delete';
 import FormSelect from "./FormSelect";
 
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 
 const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
     const styles = useStyles();
-    const field = (name: string) => `guests[${props.guestNum}].${name}`;
+    const field = (name: keyof Guest) => `guests[${props.guestNum}].${name}`;
     const { values: { guests }, setFieldValue } = useFormikContext<BookingInfo>();
 
     const removeGuest = useCallback(() => {
@@ -42,7 +42,7 @@ const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
         setFieldValue('guests', newGuests);
     }, [setFieldValue, guests]);
 
-    const canRemove =guests.length > 1;
+    const canRemove = guests.length > 1;
 
     return <Paper className={styles.guestEditor}>
         <div className={styles.guestHeader}>
@@ -64,13 +64,21 @@ const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
             label="Accomodation Category"
             name={field('category')}
             values={accomodationCategories}
-            fullWidth/>
+            fullWidth />
 
         <Field
             component={LabeledCheckbox}
             type="checkbox"
             label="Temple Basin Member"
             name={field('clubMember')} />
+
+        <Field
+            component={FormSelect}
+            type="checkbox"
+            label="Dietary Requirements"
+            multiple
+            name={field('dietaryRequirements')}
+            values={dietaryRequirements}/>
     </Paper>;
 }
 

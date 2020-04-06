@@ -17,7 +17,7 @@ const initialBooking: BookingInfo = {
         name: '',
         category: 'Adult',
         clubMember: false,
-        diertaryRequirements: [],
+        dietaryRequirements: [],
     }],
 
     selfCatered: false,

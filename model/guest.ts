@@ -23,14 +23,14 @@ export interface Guest {
     category: 'Under 13' | 'Under 18' | 'Student' | 'Adult';
     clubMember: boolean;
 
-    diertaryRequirements: DietaryRequirement[];
+    dietaryRequirements: DietaryRequirement[];
 }
 
 export const guestSchema = yup.object().shape({
     name: yup.string().required("Please specify a name."),
     category: yup.string().oneOf(accomodationCategories),
     member: yup.bool(),
-    diertaryRequirements: yup.array()
+    dietaryRequirements: yup.array()
         .of(yup.string().oneOf(dietaryRequirements))
 });
 
@@ -38,5 +38,5 @@ export const newGuest = (): Guest => ({
     name: '',
     category: 'Adult',
     clubMember: false,
-    diertaryRequirements: []
+    dietaryRequirements: []
 });
