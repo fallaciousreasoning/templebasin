@@ -87,21 +87,54 @@ const isProbablySameGuest = (g1: Guest, g2: Guest) => {
     return false;
 }
 
-const parseBooking = (day: number, rowNumber: number, columnNumber: number, columns: string[]) => {
+interface DayInfo {
+    name?: string;
+    type?: 'dbb' | 'pack' | 'sc';
+    notes?: string;
+    paid?: string;
+    room?: string;
+    status?: string;
+}
+
+const getDayInfo = (columnNumber: number, columns: string[]) => {
+    const columnHeadings: (keyof DayInfo)[] = [
+        "name",
+        "type",
+        "notes",
+        "paid",
+        "room",
+        "status"
+    ];
+
+    let result: DayInfo = {};
+    for (let i = 0; i < columnHeadings.length; ++i)
+        result[columnHeadings[i]] = columns[i + columnNumber] as any;
+
+    return result;
+}
+
+const dayFromColumn = (columnNumber: number) => {
+    return Math.floor((columnNumber - startColumn)/dayWidth);
+}
+
+const parseBooking = (rowNumber: number, columnNumber: number, columns: string[]) => {
+    const day = dayFromColumn(columnNumber);
     const guest = parseGuest(rowNumber, columnNumber, columns);
+
+    // const booking: BookingInfo = {
+    //     startDate: '2019-01-01',
+    //     duration: 1,
+    //     contactEmail: "not-real@example.com",
+    //     contactPhone: "1234",
+    //     guests: [
+    //         guest
+    //     ],
+    //     includeLiftTickets: guest.includeLiftTickets
+    // }
 }
 
 const parseGuest = (rowNumber: number, firstColumn: number, columns: string[]) => {
     const readData = (offset: number) => columns[firstColumn + offset];
-
-    const columnHeadings = [
-        "Name",
-        "Type",
-        "Notes",
-        "Paid",
-        "Room",
-        "Status"
-    ];
 
     const guest: Guest = {
         name: readData(0),
