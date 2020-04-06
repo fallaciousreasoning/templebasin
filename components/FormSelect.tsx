@@ -26,12 +26,10 @@ const defaultRenderValue = (selected: string | string[]) => {
     return selected.join(', ');
 }
 
-const defaultRenderOption = (option: string) => <MenuItem value={option}>
-    {option}
-</MenuItem>;
+const defaultRenderOption = (option: string) => option;
 
 export default (props: Props & SelectProps) => {
-    const { values, field: { name, value }, label, ...other } = props;
+    let { values, field: { name, value }, label, renderOption, renderValue, ...other } = props;
     const [id] = useState("label-" + nextId++);
     const context = useFormikContext();
 
@@ -39,8 +37,8 @@ export default (props: Props & SelectProps) => {
         context.setFieldValue(name, e.target.value);
     }, [name]);
 
-    const renderValue = props.renderValue || defaultRenderValue;
-    const renderOption = props.renderOption || defaultRenderOption;
+    renderValue = renderValue || defaultRenderValue;
+    renderOption = renderOption || defaultRenderOption;
 
     return <div>
         <FormControl fullWidth>
@@ -53,7 +51,9 @@ export default (props: Props & SelectProps) => {
                 onChange={onChange}
                 renderValue={renderValue}
                 disabled={props.disabled || context.isSubmitting}>
-                {values.map(option => <React.Fragment key={option}>{renderOption(option)}</React.Fragment>)}
+                {values.map(option => <MenuItem key={option} value={option}>
+                    {renderOption(option)}
+                </MenuItem>)}
             </Select>
         </FormControl>
     </div>

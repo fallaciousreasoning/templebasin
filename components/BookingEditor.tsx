@@ -106,12 +106,14 @@ export default (props: Props) => {
     }, [props.onSubmit]);
 
     const lodges = useLodges();
-    const lodgeChoices = useMemo(() => [noLodgeChoice, ...lodges.map(l => l.id)], [lodges]);
+    const lodgeChoices = useMemo(() => {
+        const choices = [noLodgeChoice, ...lodges.map(l => l.id)];
+        if (!choices.some(c => c === props.initialValue.preferredLodge))
+            choices.push(props.initialValue.preferredLodge);
+        return choices;
+    }, [lodges]);
     const lodgeMap = useMemo(() => lodges.reduce((prev, next) => ({ ...prev, [next.id]: next.name }), { [noLodgeChoice]: noLodgeChoice }), [lodges]);
     const renderLodge = useCallback(lodge => lodgeMap[lodge], [lodgeMap]);
-    const renderLodgeOption = useCallback(lodge => <MenuItem value={lodge}>
-        {lodgeMap[lodge]}
-    </MenuItem>, [lodgeMap]);
 
     return <Formik
         initialValues={props.initialValue}
@@ -167,7 +169,7 @@ export default (props: Props) => {
                 name="preferredLodge"
                 values={lodgeChoices}
                 renderValue={renderLodge}
-                renderOption={renderLodgeOption}
+                renderOption={renderLodge}
             />
 
             <Button
