@@ -3,6 +3,7 @@ import { BookingInfo } from "../model/bookingInfo";
 import { useState, useEffect } from "react";
 import moment, { Moment } from 'moment';
 import { assignRoom } from "./room";
+import useData from "./useData";
 
 export const bookingsPath = '/bookings';
 
@@ -57,18 +58,7 @@ export const getBooking = async (bookingId: string): Promise<BookingInfo> => {
 }
 
 export const useBooking = (bookingId: string) => {
-    const [booking, setBooking] = useState<BookingInfo>(undefined);
-
-    useEffect(() => {
-        setBooking(undefined);
-        getBooking(bookingId).then(booking => {
-            if (!booking || booking.id !== bookingId)
-              return;
-            setBooking(booking);
-        });
-    }, [bookingId]);
-
-    return booking;
+    return useData<BookingInfo>(`/api/booking/${bookingId}`);
 }
 
 export const updateBooking = async (booking: BookingInfo) => {

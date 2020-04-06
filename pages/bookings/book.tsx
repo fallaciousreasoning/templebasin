@@ -1,12 +1,10 @@
+import moment from 'moment';
 import { useRouter } from 'next/dist/client/router';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import BookingEditor from '../../components/BookingEditor';
-import Form from '../../components/Form';
 import Layout from '../../components/Layout';
-import SubmitButton from '../../components/SubmitButton';
 import { BookingInfo } from '../../model/bookingInfo';
 import { updateBooking } from '../../services/bookings';
-import moment from 'moment';
 
 const initialBooking: BookingInfo = {
     additionalGuests: 0,

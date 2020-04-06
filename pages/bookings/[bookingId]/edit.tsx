@@ -8,7 +8,8 @@ import Loader from "../../../components/Loader"
 import SubmitButton from "../../../components/SubmitButton"
 import { BookingInfo } from "../../../model/bookingInfo"
 import { useQuery } from "../../../model/routeProps"
-import { getBooking, updateBooking } from "../../../services/bookings"
+import { getBooking, updateBooking, useBooking } from "../../../services/bookings"
+import useData from "../../../services/useData"
 
 const useStyles = makeStyles(theme => ({
     progress: {
@@ -19,22 +20,20 @@ const useStyles = makeStyles(theme => ({
 export default () => {
     const classes = useStyles();
     const router = useRouter();
-    const query = useQuery<{ bookingId: string}>();
+    const query = useQuery<{ bookingId: string }>();
 
-    const [booking, setBooking] = useState<BookingInfo>(undefined);
-
-    useEffect(() => {
-        getBooking(query.bookingId).then(setBooking);
+    const booking = useBooking(query.bookingId);
+    const saveBooking = useCallback(async (booking) => {
+        await fetch(`/api/bookings/${query.bookingId}`, {
+            method: 'PUT',
+            body: JSON.stringify(booking)
+        });
+        router.push(`/bookings/${query.bookingId}`);
     }, [query.bookingId]);
 
-    const saveBooking = useCallback(async (booking) => {
-        await updateBooking(booking);
-        router.push(`/bookings/${query.bookingId}`);
-    }, [booking]);
-    
     const content = booking
-        ? <BookingEditor initialValue={booking} onSubmit={saveBooking}/>
-        : <Loader className={classes.progress}/>
+        ? <BookingEditor initialValue={booking} onSubmit={saveBooking} />
+        : <Loader className={classes.progress} />
 
     return <Layout title="Edit Booking">
         <Form>
