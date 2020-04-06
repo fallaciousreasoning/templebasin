@@ -1,70 +1,60 @@
 import { Guest } from "../model/guest"
-import TextField from '@material-ui/core/TextField';
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import PropertyEditor from "./PropertyEditor";
 import { useCallback } from "react";
+import { Formik, Form, Field } from 'formik';
+import { Button, LinearProgress } from '@material-ui/core';
+import { TextField } from 'formik-material-ui';
 
 interface Props {
-    guest: Guest;
-    onChanged: (guest: Guest) => void;
+    submitForm: () => void;
+    submitting: boolean;
 }
 
 export default (props: Props) => {
-    const onChanged = useCallback(update => {
-        props.onChanged({ ...props.guest, ...update });
-    }, [props.guest, props.onChanged]);
-
     return <>
-        <PropertyEditor
+        <Field
+            component={TextField}
+            name="firstName"
             type="text"
             label="First Name"
-            onChange={onChanged}
-            value={props.guest}
-            propertyName="firstName"
-            required />
-        <PropertyEditor
+        />
+        <Field
+            component={TextField}
             type="text"
             label="Last Name"
-            onChange={onChanged}
-            value={props.guest}
-            propertyName="lastName"
-            required />
+            name="lastName"
+        />
 
-
-        <PropertyEditor
-            type="text"
+        <Field
+            component={TextField}
+            type="email"
             label="Email"
-            onChange={onChanged}
-            value={props.guest}
-            propertyName="email"
-            required />
-        <PropertyEditor
+            name="email" />
+
+        <Field
+            component={TextField}
             type="text"
             label="Phone"
-            onChange={onChanged}
-            value={props.guest}
-            propertyName="phone"
-            required />
+            name="phone"
+        />
 
-        <PropertyEditor
+        <Field
+            component={TextField}
             type="date"
             label="Date of Birth"
-            onChange={onChanged}
-            value={props.guest}
-            propertyName="dateOfBirth"
-            required />
+            name="dateOfBirth"
+        />
 
-        <PropertyEditor
-            type="check"
+        <Field
+            component={Checkbox}
+            type="checkbox"
             label="Temple Basin Member"
-            onChange={onChanged}
-            value={props.guest}
-            propertyName="member" />
-        <PropertyEditor
-            type="check"
+            name="member" />
+        <Field
+            component={Checkbox}
+            type="checkbox"
             label="Student"
-            onChange={onChanged}
-            value={props.guest}
-            propertyName="student" />
-    </>
+            name="student" />
+    </>;
 }

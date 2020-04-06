@@ -1,10 +1,14 @@
-import { BookingInfo } from "../model/bookingInfo";
+import { BookingInfo, bookingSchema } from "../model/bookingInfo";
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import GuestEditor from "./GuestEditor";
 import { useCallback } from "react";
 import { Guest } from "../model/guest";
 import PropertyEditor from "./PropertyEditor";
+import { Formik, Field, ErrorMessage } from "formik";
+import Form from "./Form";
+import { TextField, Checkbox } from 'formik-material-ui'
+import { Button } from "@material-ui/core";
+import { object, number } from "yup";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,43 +29,47 @@ export default (props: Props) => {
     const classes = useStyles();
     const onChanged = useCallback((update: Partial<BookingInfo>) => props.onChanged({ ...props.booking, ...update }),
         [props.booking, props.onChanged]);
-    const ownerChanged = useCallback((owner: Guest) => onChanged({
-        owner: owner
-    }), [onChanged]);
+
+    console.log(props.booking)
+    return <Formik
+        initialValues={props.booking}
+        validationSchema={bookingSchema}
+        validateOnChange
+        validateOnBlur
+        onSubmit={props.onChanged}>
+        {({ submitForm, isSubmitting }) => <Form>
+            <Field component={TextField}
+                type="date"
+                label="Start Date"
+                name="startDate"
+                fullWidth />
+            <Field component={TextField}
+                type="number"
+                label="Nights Stay"
+                name="duration"
+                fullWidth />
+
+            <Field component={TextField}
+                type="number"
+                label="Additional Guests"
+                name="additionalGuests"
+                fullWidth />
+
+            <Field component={Checkbox}
+                type="checkbox"
+                label="Include Lift Tickets"
+                name="includeLiftTickets"
+            />
+            <Field component={Checkbox}
+                type="checkbox"
+                label="Self Catered"
+                name="selfCatered"
+            />
+            <Button onClick={submitForm}>Submit</Button>
+        </Form>}
+    </Formik>
 
     return <>
-        <GuestEditor guest={props.booking.owner || {} as any} onChanged={ownerChanged} />
-        <PropertyEditor
-            onChange={onChanged}
-            type="date"
-            value={props.booking}
-            label="Start Date"
-            required
-            propertyName="startDate"
-        />
-        <PropertyEditor
-            onChange={onChanged}
-            type="select"
-            options={validNights}
-            value={props.booking}
-            label="Nights Stay"
-            required
-            propertyName="duration"
-        />
-        <PropertyEditor
-            onChange={onChanged}
-            type="check"
-            value={props.booking}
-            label="Include Lift Tickets"
-            propertyName="includeLiftTickets"
-        />
-        <PropertyEditor
-            onChange={onChanged}
-            type="check"
-            value={props.booking}
-            label="Self Catered"
-            propertyName="selfCatered"
-        />
         <PropertyEditor
             onChange={onChanged}
             type="number"

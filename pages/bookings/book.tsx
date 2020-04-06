@@ -32,10 +32,10 @@ const Book = () => {
         router.replace(`/bookings/${bookingId}`);
     }, [booking]);
     return <Layout title="Book">
-        <Form>
+        <div>
             <BookingEditor booking={booking} onChanged={setBooking} />
             <SubmitButton onSubmit={submit}>Submit</SubmitButton>
-        </Form>
+        </div>
     </Layout >
 }
 
