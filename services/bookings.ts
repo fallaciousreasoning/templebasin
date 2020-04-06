@@ -19,6 +19,11 @@ export const getCheckoutDate = (booking: BookingInfo) => {
     return getCheckinDate(booking).add(booking.duration, 'days');
 }
 
+const cleanBooking = (booking: BookingInfo) => {
+    for (const guest of booking.guests)
+        guest.dietaryRequirements = guest.dietaryRequirements || [];
+    return booking;
+}
 export const getBookings = async () => {
     const bookings = await database.ref(bookingsPath)
         .orderByChild('startDate')
@@ -27,7 +32,7 @@ export const getBookings = async () => {
 
     if (!bookings)
         return [];
-    return Object.values(bookings) as BookingInfo[];
+    return Object.values(bookings).map(cleanBooking);
 }
 
 export const getBookingsInRange = async (minDate: Moment, maxDate: Moment) => {
@@ -52,13 +57,18 @@ export const isOnDay = (booking: BookingInfo, day: Moment) => {
 }
 
 export const getBooking = async (bookingId: string): Promise<BookingInfo> => {
-    return database.ref(`${bookingsPath}/${bookingId}`)
+    const value: BookingInfo = await database.ref(`${bookingsPath}/${bookingId}`)
         .once('value')
-        .then(snapshot => snapshot.val()) as Promise<BookingInfo>;
+        .then(snapshot => snapshot.val());
+
+    if (!value)
+        return null;
+        
+    return cleanBooking(value);
 }
 
 export const useBooking = (bookingId: string) => {
-    return useData<BookingInfo>(`/api/booking/${bookingId}`);
+    return useData<BookingInfo>(`/api/bookings/${bookingId}`);
 }
 
 export const updateBooking = async (booking: BookingInfo) => {

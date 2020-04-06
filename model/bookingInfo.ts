@@ -53,3 +53,10 @@ export const bookingSchema = yup
 
         additionalComments: yup.string()
     });
+
+export const getOwnerName = (booking: BookingInfo) => {
+    if (!booking.guests.length)
+        return booking.contactEmail;
+    
+    return booking.guests[0].name;
+}

@@ -14,6 +14,7 @@ export default async (req: ApiRequest<{ bookingId: string }>, res: ServerRespons
         booking.id = req.query.bookingId;
         await updateBooking(booking);
         res.statusCode = 204;
+        res.end();
     } else {
         notFound(res);
     }

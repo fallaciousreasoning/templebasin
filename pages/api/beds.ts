@@ -22,7 +22,7 @@ export default async (req: ApiRequest, res: ServerResponse) => {
     const notCheckingOut = notCheckingOutOn(on);
     const bookings = (await getBookingsOnDay(on)).filter(notCheckingOut);
     const bedInfos: BedInfo[] = bookings.map(b => ({
-        owner: `${b.owner.firstName} ${b.owner.lastName}`,
+        owner: b.guests[0].name,
         guests: getNumGuests(b),
         checkin: getCheckinDate(b).format('DD-MM-YYYY'),
         checkout: getCheckoutDate(b).format('DD-MM-YYYY'),

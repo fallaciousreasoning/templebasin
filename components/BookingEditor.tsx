@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
     const styles = useStyles();
     const field = (name: keyof Guest) => `guests[${props.guestNum}].${name}`;
-    const { values: { guests }, setFieldValue } = useFormikContext<BookingInfo>();
+    const { values: { guests }, setFieldValue, isSubmitting } = useFormikContext<BookingInfo>();
 
     const removeGuest = useCallback(() => {
         const newGuests = [...guests];
@@ -44,10 +44,10 @@ const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
 
     const canRemove = guests.length > 1;
 
-    return <Paper className={styles.guestEditor}>
+    return <Paper elevation={2} className={styles.guestEditor}>
         <div className={styles.guestHeader}>
             <h3>Guest {props.guestNum + 1}</h3>
-            {canRemove && <IconButton onClick={removeGuest}>
+            {canRemove && <IconButton onClick={removeGuest} disabled={isSubmitting}>
                 <DeleteIcon />
             </IconButton>}
         </div>
@@ -78,7 +78,7 @@ const GuestEditor = (props: { guestNum: number, guest: Guest }) => {
             label="Dietary Requirements"
             multiple
             name={field('dietaryRequirements')}
-            values={dietaryRequirements}/>
+            values={dietaryRequirements} />
     </Paper>;
 }
 

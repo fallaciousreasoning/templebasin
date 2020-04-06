@@ -5,8 +5,13 @@ export default <T>(url: string, defaultValue: T = undefined) => {
 
     useEffect(() => {
         setData(defaultValue);
-        fetch(url).then(url => url.json()).then(setData);
+        if (!url)
+            return;
+            
+        fetch(url)
+            .then(url => url.json())
+            .then(setData);
     }, [url]);
-    
+
     return data;
 }

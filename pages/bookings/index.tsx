@@ -3,12 +3,11 @@ import BookingView from "../../components/BookingView";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import { getBookings } from "../../services/bookings";
+import useData from "../../services/useData";
+import { BookingInfo } from "../../model/bookingInfo";
 
 export default () => {
-    const [bookings, setBookings] = useState([]);
-    useEffect(() => {
-        getBookings().then(bookings => setBookings(bookings));
-    }, []);
+    const bookings = useData<BookingInfo[]>(`/api/bookings`, []);
     return <Layout title="Bookings">
         {bookings ? bookings.map(b => <div key={b.id}>
             <BookingView booking={b} />

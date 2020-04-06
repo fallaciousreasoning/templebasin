@@ -4,6 +4,7 @@ import { getBookingsInRange, getBookings } from "../../../services/bookings";
 import moment, { Moment } from "moment";
 import queryString from 'query-string';
 import { jsonResponse } from "../../../utils/response";
+import { BookingInfo } from "../../../model/bookingInfo";
 
 // request should be either of the form:
 //   /bookings?from=YYYY-MM-DD&to=YYYY-MM-DD
@@ -12,30 +13,25 @@ import { jsonResponse } from "../../../utils/response";
 export default async (req: ApiRequest, res: ServerResponse) => {
     const query = queryString.parseUrl(req.url).query;
 
-    let from = query.from || query.on;
-    let to = query.to;
+    let start: Moment;
+    let end: Moment;
 
-    let start: Moment = moment(from);
-    let end: Moment = moment(to);
-
-    if (!from) {
-        res.end("Missing required param 'from'");
-        res.statusCode = 400;
-        return;
-    }
-
-    if (!to) {
-        // From is required for from/to queries.
-        if (query.from) {
-            res.end("Missing required param 'to'");
-            res.statusCode = 400;
-            return;
-        }
-
+    const from = query.from || query.on;
+    if (from) {
         start = moment(from).startOf('day');
-        end = moment(from).endOf('day');
+    }
+    if (query.to) {
+        end = moment(query.to).endOf('day');
     }
 
-    const bookings = await getBookingsInRange(start, end);
+    if (start && !end)
+        end = moment(start).endOf('day');
+
+    let bookings: BookingInfo[];
+    if (start && end)
+        bookings = await getBookingsInRange(start, end);
+    else
+        bookings = await getBookings();
+        
     jsonResponse(bookings, res);
 }
