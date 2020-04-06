@@ -1,36 +1,15 @@
-import { BookingInfo, bookingSchema } from "../model/bookingInfo";
-import { makeStyles } from '@material-ui/core/styles';
-import GuestEditor from "./GuestEditor";
-import { useCallback } from "react";
-import { Guest } from "../model/guest";
-import PropertyEditor from "./PropertyEditor";
-import { Formik, Field, ErrorMessage } from "formik";
-import Form from "./Form";
-import { TextField, Checkbox } from 'formik-material-ui'
 import { Button } from "@material-ui/core";
-import { object, number } from "yup";
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& .MuiTextField-root': {
-            margin: theme.spacing(2),
-            width: 200,
-        },
-    },
-}));
+import { Field, Formik, Form } from "formik";
+import { TextField } from 'formik-material-ui';
+import { BookingInfo, bookingSchema } from "../model/bookingInfo";
+import LabeledCheckbox from "./LabeledCheckbox";
 
 interface Props {
     booking: BookingInfo;
     onChanged: (booking: BookingInfo) => void;
 }
 
-const validNights = [1, 2, 3, 4, 5, 6, 7];
 export default (props: Props) => {
-    const classes = useStyles();
-    const onChanged = useCallback((update: Partial<BookingInfo>) => props.onChanged({ ...props.booking, ...update }),
-        [props.booking, props.onChanged]);
-
-    console.log(props.booking)
     return <Formik
         initialValues={props.booking}
         validationSchema={bookingSchema}
@@ -55,27 +34,26 @@ export default (props: Props) => {
                 name="additionalGuests"
                 fullWidth />
 
-            <Field component={Checkbox}
-                type="checkbox"
-                label="Include Lift Tickets"
-                name="includeLiftTickets"
-            />
-            <Field component={Checkbox}
-                type="checkbox"
-                label="Self Catered"
-                name="selfCatered"
-            />
-            <Button onClick={submitForm}>Submit</Button>
+            <div>
+                <Field component={LabeledCheckbox}
+                    type="checkbox"
+                    label="Include Lift Tickets"
+                    name="includeLiftTickets"
+                />
+            </div>
+            <div>
+                <Field component={LabeledCheckbox}
+                    type="checkbox"
+                    label="Self Catered"
+                    name="selfCatered"
+                />
+            </div>
+            <Button
+                variant='contained'
+                color='primary'
+                onClick={submitForm}>
+                Submit
+            </Button>
         </Form>}
-    </Formik>
-
-    return <>
-        <PropertyEditor
-            onChange={onChanged}
-            type="number"
-            value={props.booking}
-            label="Additional Guests"
-            propertyName="additionalGuests"
-        />
-    </>
+    </Formik>;
 }
