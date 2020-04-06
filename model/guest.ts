@@ -1,27 +1,42 @@
 import * as yup from 'yup';
+import { enumValues } from '../utils/enum';
+
+enum DietaryRequirement {
+    'Vegetarian',
+    'Vegan',
+    'Pescatarian',
+    'Gluten Free',
+    'Lactose Intolerant'
+};
+const dietaryRequirements = enumValues(DietaryRequirement);
+
+enum AccomodationCategory {
+    'Under 13',
+    'Under 18',
+    'Student',
+    'Adult'
+};
+const accomodationCategories = enumValues(AccomodationCategory);
 
 export interface Guest {
-    firstName: string;
-    lastName: string;
+    name: string;
+    category: 'Under 13' | 'Under 18' | 'Student' | 'Adult';
+    clubMember: boolean;
 
-    dateOfBirth: string;
-
-    email: string;
-    phone: string;
-
-    member: boolean;
-    student: boolean;
+    diertaryRequirements: DietaryRequirement[];
 }
 
 export const guestSchema = yup.object().shape({
-    firstName: yup.string().required("Please specify a first name."),
-    lastName: yup.string().required("Please specify a last name."),
-
-    dateOfBirth: yup.date().required().max(new Date(), "Date of birth must be in the past."),
-
-    email: yup.string().email("Invalid email!").required("An email address is required."),
-    phone: yup.string().required("Phone number is required."),
-
+    name: yup.string().required("Please specify a name."),
+    category: yup.string().oneOf(accomodationCategories),
     member: yup.bool(),
-    student: yup.bool()
-})
+    diertaryRequirements: yup.array()
+        .of(yup.string().oneOf(dietaryRequirements))
+});
+
+export const newGuest = (): Guest => ({
+    name: '',
+    category: 'Adult',
+    clubMember: false,
+    diertaryRequirements: []
+});

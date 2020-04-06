@@ -8,14 +8,19 @@ export interface BookingInfo {
     duration: number;
     startDate: string;
 
-    owner: Guest;
-    additionalGuests: number;
+    contactEmail: string;
+    contactPhone: string;
+
+    guests: Guest[];
 
     selfCatered: boolean;
     includeLiftTickets: boolean;
 
+    preferredLodge?: string;
     lodge?: string;
     startRoom?: number;
+
+    additionalComments?: string
 };
 
 export const bookingSchema = yup
@@ -31,14 +36,20 @@ export const bookingSchema = yup
             return moment().add(1, 'day');
         }),
 
-        owner: guestSchema.required(),
-        additionalGuests: yup.number().integer()
-            .min(0)
-            .max(4, "You can book for at most five people at one time."),
+        contactEmail: yup.string().email("Invalid email address.").required("Please provide an email."),
+        contactPhone: yup.string().required("Please provide a phone number"),
+
+        guests: yup.array()
+            .min(1, "At least one guest must be present.")
+            .max(5, "At most five guests may be present")
+            .of(guestSchema),
 
         selfCatered: yup.bool(),
         includeLiftTickets: yup.bool(),
 
+        preferredLodge: yup.string(),
         lodge: yup.string(),
         startRoom: yup.number().integer(),
+
+        additionalComments: yup.string()
     });

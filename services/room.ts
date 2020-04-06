@@ -37,10 +37,10 @@ export const assignRoom = async (booking: BookingInfo) => {
     // Sort by whether the lodge preference for students matches whether the owner is a student,
     // then by the fill order of the lodge.
     const preferences = lodges.sort((first, second) => {
-        if (first.preferStudents !== second.preferStudents) {
-            return first.preferStudents !== booking.owner.student
-                ? -1 : 1;
-        }
+        if (booking.preferredLodge === first.id)
+            return -1;
+        if (booking.preferredLodge === second.id)
+            return 1;
 
         return second.fillOrder - first.fillOrder;
     });

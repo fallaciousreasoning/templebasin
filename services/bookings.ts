@@ -8,7 +8,7 @@ import useData from "./useData";
 export const bookingsPath = '/bookings';
 
 export const getNumGuests = (booking: BookingInfo) => {
-    return 1 + (isNaN(booking.additionalGuests) ? 0 : booking.additionalGuests);
+    return booking.guests.length;
 }
 
 export const getCheckinDate = (booking: BookingInfo) => {

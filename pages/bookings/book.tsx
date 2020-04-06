@@ -7,20 +7,24 @@ import { BookingInfo } from '../../model/bookingInfo';
 import { updateBooking } from '../../services/bookings';
 
 const initialBooking: BookingInfo = {
-    additionalGuests: 0,
-    owner: {
-        firstName: "",
-        lastName: "",
-        dateOfBirth: moment().format('YYYY-MM-DD'),
-        email: "",
-        member: false,
-        phone: "",
-        student: false
-    },
-    duration: 1,
-    includeLiftTickets: true,
-    selfCatered: false,
     startDate: moment().add(1, 'day').format('YYYY-MM-DD'),
+    duration: 1,
+
+    contactEmail: '',
+    contactPhone: '',
+
+    guests: [{
+        name: '',
+        category: 'Adult',
+        clubMember: false,
+        diertaryRequirements: [],
+    }],
+
+    selfCatered: false,
+    includeLiftTickets: true,
+
+    preferredLodge: 'None',
+    additionalComments: '',
 };
 const Book = () => {
     const router = useRouter();
