@@ -3,21 +3,25 @@ import { Field, Formik, Form } from "formik";
 import { TextField } from 'formik-material-ui';
 import { BookingInfo, bookingSchema } from "../model/bookingInfo";
 import LabeledCheckbox from "./LabeledCheckbox";
+import { useCallback } from "react";
 
 interface Props {
-    booking: BookingInfo;
-    onChanged: (booking: BookingInfo) => void;
+    initialValue: BookingInfo;
+    onSubmit: (booking: BookingInfo) => Promise<any>;
 }
 
 export default (props: Props) => {
+    const submit = useCallback(async (value, {setSubmitting}) => {
+        await props.onSubmit(value);
+        setSubmitting(false);
+    }, [props.onSubmit]);
     return <Formik
-        initialValues={props.booking}
+        initialValues={props.initialValue}
         validationSchema={bookingSchema}
         validateOnChange
         validateOnBlur
-        onSubmit={props.onChanged}>
+        onSubmit={submit}>
         {({ submitForm, isSubmitting }) => <Form>
-
             <Field
                 component={TextField}
                 name="owner.firstName"
