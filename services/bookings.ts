@@ -7,7 +7,7 @@ import useData from "./useData";
 
 export const bookingsPath = '/bookings';
 
-export const getNumGuests = (booking: BookingInfo) => {
+export const getNumGuests = (booking: Pick<BookingInfo, 'guests'>) => {
     return booking.guests.length;
 }
 
@@ -63,7 +63,7 @@ export const getBooking = async (bookingId: string): Promise<BookingInfo> => {
 
     if (!value)
         return null;
-        
+
     return cleanBooking(value);
 }
 
@@ -73,7 +73,9 @@ export const useBooking = (bookingId: string) => {
 
 export const updateBooking = async (booking: BookingInfo) => {
     if (!booking.id) {
-        await assignRoom(booking);
+        const assignment = await assignRoom(booking);
+        booking.lodge = assignment.lodge;
+        booking.startRoom = assignment.startRoom;
     }
 
     const id = booking.id || (await database.ref(bookingsPath).push()).key;

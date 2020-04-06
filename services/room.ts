@@ -1,10 +1,12 @@
-import { BookingInfo } from "../model/bookingInfo";
+import { BookingInfo, bookingSchema } from "../model/bookingInfo";
 import { getLodges } from "./lodges";
 import moment from "moment";
 import { getBookingsInRange, getNumGuests } from "./bookings";
 import { Lodge } from "../model/lodge";
 
-const getStartRoom = (lodge: Lodge, booking: BookingInfo, bookings: BookingInfo[]): number => {
+export type MinInfoForRoom = Pick<BookingInfo, 'startDate' | 'duration' | 'guests' | 'preferredLodge'>;
+
+const getStartRoom = (lodge: Lodge, booking: MinInfoForRoom, bookings: BookingInfo[]): number => {
     const numGuests = getNumGuests(booking);
     const maxRoom = lodge.occupancy;
 
@@ -27,7 +29,7 @@ const getStartRoom = (lodge: Lodge, booking: BookingInfo, bookings: BookingInfo[
     return -1;
 }
 
-export const assignRoom = async (booking: BookingInfo) => {
+export const assignRoom = async (booking: MinInfoForRoom) => {
     const start = moment(booking.startDate);
     const end = moment(booking.startDate).add(booking.duration, 'days');
     
@@ -53,10 +55,11 @@ export const assignRoom = async (booking: BookingInfo) => {
         if (startRoom === -1)
             continue;
 
-        booking.lodge = lodge.id;
-        booking.startRoom = startRoom;
+        return {
+            lodge: lodge.id,
+            startRoom: startRoom
+        }
     }
-
-    if (!booking.lodge)
-        throw new Error(`Unable to fit ${getNumGuests(booking)}`);
+    
+    throw new Error(`No space for booking!`);
 }
