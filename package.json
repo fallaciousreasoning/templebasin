@@ -12,6 +12,7 @@
     "@material-ui/icons": "^4.9.1",
     "@types/chartjs": "0.0.31",
     "@types/react-chartjs-2": "^2.5.7",
+    "@types/yup": "^0.26.34",
     "chart.js": "^2.9.3",
     "firebase": "^7.13.1",
     "formik": "^2.1.4",
