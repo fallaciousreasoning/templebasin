@@ -90,15 +90,16 @@ const priceForStay = (guest: Guest, booking: BookingInfo, prices: Prices) => {
     const addPriceForDays = (days: number, scheme: PriceInfo) =>
         total += (scheme.isPerDay ? days : 1) * determinePrice(guest, scheme);
 
-    if (selfCatered) {
-        addPriceForDays(duration, prices.accomodationOnly);
-    } else if (!includeLiftTickets) {
-        addPriceForDays(duration, prices.dbb);
-    } else {
+    if (includeLiftTickets) {
         const packageIndex = duration - 1;
         if (packageIndex >= prices.packages.length)
             throw new Error(`No package covering ${duration} days!`);
         addPriceForDays(duration, prices.packages[packageIndex]);
+    }
+    else if (selfCatered) {
+        addPriceForDays(duration, prices.accomodationOnly);
+    } else {
+        addPriceForDays(duration, prices.dbb);
     }
     
     return total;
