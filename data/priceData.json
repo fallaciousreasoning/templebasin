@@ -1,5 +1,6 @@
 {
     "liftPasses": {
+        "perDay": true,
         "adult": {
             "default": 55,
             "weekend": 65,
@@ -20,43 +21,8 @@
             "overnight": 0
         }
     },
-    "dbb2xLunch": {
-        "adult": {
-            "default": 120,
-            "clubMember": 102
-        },
-        "student": {
-            "default": 110,
-            "clubMember": 92
-        },
-        "under18": {
-            "default": 105,
-            "clubMember": 87
-        },
-        "under13": {
-            "default": 95,
-            "clubMember": 77
-        }
-    },
-    "dbb1xLunch": {
-        "adult": {
-            "default": 110,
-            "clubMember": 95
-        },
-        "student": {
-            "default": 100,
-            "clubMember": 85
-        },
-        "under18": {
-            "default": 95,
-            "clubMember": 80
-        },
-        "under13": {
-            "default": 85,
-            "clubMember": 70
-        }
-    },
     "dbb": {
+        "perDay": true,
         "adult": {
             "default": 95,
             "clubMember": 85
@@ -79,10 +45,12 @@
         "clubMember": 130
     },
     "accomodationOnly": {
+        "perDay": true,
         "default": 45,
         "clubMember": 38
     },
     "lunchOnly": {
+        "perDay": true,
         "default": 15,
         "clubMember": 12,
         "under13": {
@@ -90,7 +58,8 @@
             "clubMember": 8
         }
     },
-    "1night2days": {
+    "packages": [{
+        "name": "1 Night 2 Days",
         "adult": {
             "default": 200,
             "clubMember": 165
@@ -108,7 +77,8 @@
             "clubMember": 95
         }
     },
-    "2nights3days": {
+    {
+        "name": "2 Nights 3 Days",
         "adult": {
             "default": 340,
             "clubMember": 285
@@ -126,7 +96,8 @@
             "clubMember": 155
         }
     },
-    "3nights4days": {
+    {
+        "name": "3 Nights 4 Days",
         "adult": {
             "default": 460,
             "clubMember": 390
@@ -144,7 +115,8 @@
             "clubMember": 220
         }
     },
-    "4nights5days": {
+    {
+        "name": "4 Nights 5 Days",
         "adult": {
             "default": 570,
             "clubMember": 485
@@ -162,7 +134,8 @@
             "clubMember": 280
         }
     },
-    "5nights6days": {
+    {
+        "name": "5 Nights 6 Days",
         "adult": {
             "default": 670,
             "clubMember": 570
@@ -180,7 +153,8 @@
             "clubMember": 345
         }
     },
-    "6nights7days": {
+    {
+        "name": "6 Nights 7 Days",
         "adult": {
             "default": 760,
             "clubMember": 650
@@ -197,5 +171,5 @@
             "default": 450,
             "clubMember": 385
         }
-    }
+    }]
 }
