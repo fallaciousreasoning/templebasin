@@ -1,11 +1,12 @@
 import moment from 'moment';
 import { useRouter } from 'next/dist/client/router';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import BookingEditor from '../../components/BookingEditor';
 import Layout from '../../components/Layout';
 import { BookingInfo } from '../../model/bookingInfo';
 import { updateBooking } from '../../services/bookings';
 import { noLodgeChoice } from '../../model/lodge';
+import { ensureLoggedIn } from '../../services/firebase';
 
 const initialBooking: BookingInfo = {
     startDate: moment().add(1, 'day').format('YYYY-MM-DD'),
@@ -44,6 +45,11 @@ const Book = () => {
         const bookingId = await updateBooking(booking);
         router.replace(`/bookings/${bookingId}`);
     }, []);
+
+    useEffect(() => {
+        ensureLoggedIn();
+    }, []);
+    
     return <Layout title="Book">
         <BookingEditor initialValue={initialBooking} onSubmit={submit} />
         {errors.length !== 0 && <ul>

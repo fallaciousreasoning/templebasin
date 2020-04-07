@@ -6,3 +6,12 @@ if (!firebase.apps.length)
     firebase.initializeApp(config);
 
 export const database = firebase.database();
+
+export const ensureLoggedIn = async () => {
+    const auth = firebase.auth();
+
+    if (!auth.currentUser)
+        await auth.signInAnonymously();
+        
+    return auth.currentUser;
+}
