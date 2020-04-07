@@ -1,0 +1,201 @@
+{
+    "liftPasses": {
+        "adult": {
+            "midweek": 55,
+            "weekend": 65,
+            "clubMember": 45
+        },
+        "student": {
+            "default": 60,
+            "clubMember": 45
+        },
+        "under18": {
+            "default": 40,
+            "clubMember": 35
+        },
+        "under13": 0,
+        "over65": {
+            "default": "student",
+            "clubMember": 0,
+            "overnight": 0
+        }
+    },
+    "dbb2xLunch": {
+        "adult": {
+            "default": 120,
+            "clubMember": 102
+        },
+        "student": {
+            "default": 110,
+            "clubMember": 92
+        },
+        "under18": {
+            "default": 105,
+            "clubMember": 87
+        },
+        "under13": {
+            "default": 95,
+            "clubMember": 77
+        }
+    },
+    "dbb1xLunch": {
+        "adult": {
+            "default": 110,
+            "clubMember": 95
+        },
+        "student": {
+            "default": 100,
+            "clubMember": 85
+        },
+        "under18": {
+            "default": 95,
+            "clubMember": 80
+        },
+        "under13": {
+            "default": 85,
+            "clubMember": 70
+        }
+    },
+    "dbb": {
+        "adult": {
+            "default": 95,
+            "clubMember": 85
+        },
+        "student": {
+            "default": 85,
+            "clubMember": 75
+        },
+        "under18": {
+            "default": 80,
+            "clubMember": 70
+        },
+        "under13": {
+            "default": 70,
+            "clubMember": 60
+        }
+    },
+    "weekender": {
+        "default": 150,
+        "clubMember": 130
+    },
+    "accomodationOnly": {
+        "default": 45,
+        "clubMember": 38
+    },
+    "lunchOnly": {
+        "default": 15,
+        "clubMember": 12,
+        "under13": {
+            "default": 10,
+            "clubMember": 8
+        }
+    },
+    "1night2days": {
+        "adult": {
+            "default": 200,
+            "clubMember": 165
+        },
+        "student": {
+            "default": 165,
+            "clubMember": 140
+        },
+        "under18": {
+            "default": 135,
+            "clubMember": 120
+        },
+        "under13": {
+            "default": 110,
+            "clubMember": 95
+        }
+    },
+    "2nights3days": {
+        "adult": {
+            "default": 340,
+            "clubMember": 285
+        },
+        "student": {
+            "default": 275,
+            "clubMember": 240
+        },
+        "under18": {
+            "default": 235,
+            "clubMember": 220
+        },
+        "under13": {
+            "default": 195,
+            "clubMember": 155
+        }
+    },
+    "3nights4days": {
+        "adult": {
+            "default": 460,
+            "clubMember": 390
+        },
+        "student": {
+            "default": 365,
+            "clubMember": 325
+        },
+        "under18": {
+            "default": 320,
+            "clubMember": 300
+        },
+        "under13": {
+            "default": 275,
+            "clubMember": 220
+        }
+    },
+    "4nights5days": {
+        "adult": {
+            "default": 570,
+            "clubMember": 485
+        },
+        "student": {
+            "default": 455,
+            "clubMember": 400
+        },
+        "under18": {
+            "default": 385,
+            "clubMember": 375
+        },
+        "under13": {
+            "default": 345,
+            "clubMember": 280
+        }
+    },
+    "5nights6days": {
+        "adult": {
+            "default": 670,
+            "clubMember": 570
+        },
+        "student": {
+            "default": 520,
+            "clubMember": 460
+        },
+        "under18": {
+            "default": 440,
+            "clubMember": 430
+        },
+        "under13": {
+            "default": 410,
+            "clubMember": 345
+        }
+    },
+    "6nights7days": {
+        "adult": {
+            "default": 760,
+            "clubMember": 650
+        },
+        "student": {
+            "default": 595,
+            "clubMember": 525
+        },
+        "under18": {
+            "default": 495,
+            "clubMember": 465
+        },
+        "under13": {
+            "default": 450,
+            "clubMember": 385
+        }
+    }
+}
