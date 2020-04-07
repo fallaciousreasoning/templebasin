@@ -1,7 +1,17 @@
 import { useState, useEffect } from "react";
 import { BookingInfo } from "../model/bookingInfo";
+import { Paper, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles(theme => ({
+    container: {
+        padding: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        fontWeight: theme.typography.fontWeightBold,
+    }
+}));
 
 export default (props: { booking: BookingInfo }) => {
+    const styles = useStyles();
     const [price, setPrice] = useState(0);
     useEffect(() => {
         let isValid = true;
@@ -24,7 +34,7 @@ export default (props: { booking: BookingInfo }) => {
         props.booking.selfCatered,
         props.booking.guests
     ]);
-    return <div>
-        <b>Total Price:</b> {price}
-    </div>
+    return <Paper elevation={5} className={styles.container}>
+        Total Price: ${price} NZD
+    </Paper>
 }

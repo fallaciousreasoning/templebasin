@@ -2,6 +2,7 @@ import { BookingInfo } from "../model/bookingInfo";
 import { Button, Paper, makeStyles } from "@material-ui/core";
 import { useCallback } from "react";
 import { useRouter } from "next/dist/client/router";
+import BookingPrice from "./BookingPrice";
 
 const useStyles = makeStyles(theme => ({
     guest: {
@@ -33,6 +34,7 @@ export default ({ booking }: { booking: BookingInfo }) => {
         </Paper>)}
         <div>Catered: {booking.selfCatered ? "no" : "yes"}</div>
         <div>Includes Lift Tickets: {booking.includeLiftTickets ? "yes" : "no"}</div>
+        <BookingPrice booking={booking}/>
         <div>
             <Button variant="contained" color="primary" onClick={editBooking}>Edit</Button>
         </div>

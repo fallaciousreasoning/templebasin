@@ -10,6 +10,7 @@ import FormSelect from "./FormSelect";
 import LabeledCheckbox from "./LabeledCheckbox";
 import debounce from "../utils/debounce";
 import BookingPrice from "./BookingPrice";
+import Sticky from "./Sticky";
 
 interface Props {
     initialValue: BookingInfo;
@@ -140,6 +141,9 @@ export default (props: Props) => {
         validateOnBlur
         onSubmit={submit}>
         {({ submitForm, values, setFieldValue }) => <Form>
+            <Sticky>
+                <BookingPrice booking={values}/>
+            </Sticky>
             <Field component={TextField}
                 type="date"
                 label="Start Date"
@@ -189,8 +193,6 @@ export default (props: Props) => {
                 renderValue={renderLodge}
                 renderOption={renderLodge}
             />
-
-            <BookingPrice booking={values}/>
 
             <Button
                 className={styles.submitButton}

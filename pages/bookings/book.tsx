@@ -7,6 +7,7 @@ import { BookingInfo } from '../../model/bookingInfo';
 import { updateBooking } from '../../services/bookings';
 import { noLodgeChoice } from '../../model/lodge';
 import { ensureLoggedIn } from '../../services/firebase';
+import { AccomodationCategory } from '../../model/guest';
 
 const initialBooking: BookingInfo = {
     startDate: moment().add(1, 'day').format('YYYY-MM-DD'),
@@ -17,7 +18,7 @@ const initialBooking: BookingInfo = {
 
     guests: [{
         name: '',
-        category: 'Adult',
+        category: AccomodationCategory.Adult,
         clubMember: false,
         dietaryRequirements: [],
     }],

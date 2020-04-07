@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core"
 const useStyles = makeStyles(theme => ({
     sticky: {
         position: 'sticky',
-        top: 0
+        top: 0,
+        zIndex: 1000
     }
 }));
 

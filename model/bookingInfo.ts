@@ -30,7 +30,7 @@ export const bookingSchema = yup
 
         duration: yup.number().integer()
             .positive("Must stay at least one day")
-            .max(7).required(),
+            .max(6).required(),
 
         startDate: yup.date().min(new Date(), "Booking must be in the future!").required().default(() => {
             return moment().add(1, 'day');
