@@ -1,5 +1,5 @@
 import { BookingInfo } from "../model/bookingInfo";
-import { Guest } from "../model/guest";
+import { Guest, AccomodationCategory } from "../model/guest";
 
 const fs = require('fs');
 
@@ -138,7 +138,7 @@ const parseGuest = (rowNumber: number, firstColumn: number, columns: string[]) =
 
     const guest: Guest = {
         name: readData(0),
-        category: 'Adult',
+        category: AccomodationCategory.Adult,
         clubMember: false,
         dietaryRequirements: []
     };
