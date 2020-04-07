@@ -9,6 +9,7 @@ import { noLodgeChoice, useLodges } from "../model/lodge";
 import FormSelect from "./FormSelect";
 import LabeledCheckbox from "./LabeledCheckbox";
 import debounce from "../utils/debounce";
+import BookingPrice from "./BookingPrice";
 
 interface Props {
     initialValue: BookingInfo;
@@ -188,6 +189,8 @@ export default (props: Props) => {
                 renderValue={renderLodge}
                 renderOption={renderLodge}
             />
+
+            <BookingPrice booking={values}/>
 
             <Button
                 className={styles.submitButton}

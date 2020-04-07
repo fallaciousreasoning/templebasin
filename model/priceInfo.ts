@@ -112,4 +112,6 @@ export const calculatePrice = async (booking: BookingInfo) => {
         const guestCost = priceForStay(guest, booking, prices);
         total += guestCost;
     }
+
+    return total;
 }
