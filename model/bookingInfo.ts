@@ -1,6 +1,7 @@
 import { Guest, guestSchema } from "./guest";
 import * as yup from 'yup';
-import moment from "moment";
+import moment, { Moment } from "moment";
+import { getCheckinDate, getCheckoutDate } from "../services/bookings";
 
 export interface BookingInfo {
     id?: string;
@@ -57,6 +58,14 @@ export const bookingSchema = yup
 export const getOwnerName = (booking: BookingInfo) => {
     if (!booking.guests.length)
         return booking.contactEmail;
-    
+
     return booking.guests[0].name;
+}
+
+export const daysInRange = (booking: BookingInfo, from: Moment, to: Moment) => {
+    const start = moment.max(getCheckinDate(booking), from);
+    const end = moment.min(getCheckoutDate(booking), to);
+
+    const days = end.diff(start, 'days');
+    return Math.max(0, days);
 }

@@ -9,6 +9,7 @@ import { BookingInfo } from "../../model/bookingInfo";
 import useData from "../../services/useData";
 import round from "../../utils/round";
 import { getNumGuests } from "../../services/bookings";
+import MealInfo from "../../components/MealInfo";
 
 const useStyles = makeStyles(theme => ({
     calendar: {
@@ -67,6 +68,7 @@ const renderGraphs = (from: Moment, to: Moment) => {
         <div>
             <b>Checkins:</b> {periodInfo.checkins} <b>Checkouts:</b> {periodInfo.checkouts}
         </div>
+        <MealInfo bookings={infos} from={from} to={to}/>
         <div>
             <h3>Booking Breakdown</h3>
             <BookingTypeGraph {...periodInfo} />

@@ -1,12 +1,12 @@
 import * as yup from 'yup';
 import { enumValues } from '../utils/enum';
 
-enum DietaryRequirement {
-    'Vegetarian',
-    'Vegan',
-    'Pescatarian',
-    'Gluten Free',
-    'Lactose Intolerant'
+export enum DietaryRequirement {
+    Vegetarian = 'Vegetarian',
+    Vegan = 'Vegan',
+    Pescatarian = 'Pescatarian',
+    GlutenFree = 'Gluten Free',
+    LactoseIntolerant  = 'Lactose Intolerant'
 };
 export const dietaryRequirements = enumValues(DietaryRequirement);
 
