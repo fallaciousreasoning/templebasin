@@ -28,7 +28,7 @@ export default ({ booking }: { booking: BookingInfo }) => {
         {booking.guests.map((guest, i) => <Paper elevation={2} key={i} className={styles.guest}>
             <div>Name: {guest.name}</div>
             <div>Accomodation Category: {guest.category}</div>
-            <div>Club Member: {guest.clubMember}</div>
+            <div>Club Member: {guest.clubMember ? 'yes' : 'no'}</div>
             <div>Dietary Requirements: {guest.dietaryRequirements.join(', ') || 'None'}</div>
         </Paper>)}
         <div>Catered: {booking.selfCatered ? "no" : "yes"}</div>
