@@ -37,7 +37,8 @@ const useStyles = makeStyles(theme => ({
         }
     },
     submitButton: {
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
     }
 }));
 
@@ -141,9 +142,6 @@ export default (props: Props) => {
         validateOnBlur
         onSubmit={submit}>
         {({ submitForm, values, setFieldValue }) => <Form>
-            <Sticky>
-                <BookingPrice booking={values}/>
-            </Sticky>
             <Field component={TextField}
                 type="date"
                 label="Start Date"
@@ -201,6 +199,9 @@ export default (props: Props) => {
                 onClick={submitForm}>
                 Submit
             </Button>
+            <Sticky position="bottom">
+                <BookingPrice booking={values}/>
+            </Sticky>
         </Form>}
     </Formik>;
 }

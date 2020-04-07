@@ -5,8 +5,6 @@ import { Paper, makeStyles } from "@material-ui/core";
 const useStyles = makeStyles(theme => ({
     container: {
         padding: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-        fontWeight: theme.typography.fontWeightBold,
     }
 }));
 
@@ -35,6 +33,6 @@ export default (props: { booking: BookingInfo }) => {
         props.booking.guests
     ]);
     return <Paper elevation={5} className={styles.container}>
-        Total Price: ${price} NZD
+        <b>Total Price: </b> ${price} NZD
     </Paper>
 }

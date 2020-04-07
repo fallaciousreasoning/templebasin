@@ -1,15 +1,21 @@
 import { makeStyles } from "@material-ui/core"
 
-const useStyles = makeStyles(theme => ({
+interface Props {
+    children: React.ReactNode;
+    position?: 'top' | 'bottom';
+}
+
+const useStyles = makeStyles((theme) => ({
     sticky: {
         position: 'sticky',
-        top: 0,
-        zIndex: 1000
+        top: props => (props['position'] === undefined || props['position'] === 'top') ? 0 : undefined,
+        bottom: props => props['position'] === 'bottom' ? 0 : undefined,
+        zIndex: 1000,
     }
 }));
 
-export default (props: { children: React.ReactNode }) => {
-    const styles = useStyles();
+export default (props: { children: React.ReactNode, position?: 'top' | 'bottom' }) => {
+    const styles = useStyles(props);
     return <div className={styles.sticky}>
         {props.children}
     </div>
