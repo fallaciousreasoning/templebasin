@@ -10,17 +10,17 @@ enum DietaryRequirement {
 };
 export const dietaryRequirements = enumValues(DietaryRequirement);
 
-enum AccomodationCategory {
-    'Under 13',
-    'Under 18',
-    'Student',
-    'Adult'
+export enum AccomodationCategory {
+    Under13 = 'Under 13',
+    Under18 = 'Under 18',
+    Student = 'Student',
+    Adult = 'Adult'
 };
 export const accomodationCategories = enumValues(AccomodationCategory);
 
 export interface Guest {
     name: string;
-    category: 'Under 13' | 'Under 18' | 'Student' | 'Adult';
+    category: AccomodationCategory;
     clubMember: boolean;
 
     dietaryRequirements: DietaryRequirement[];
@@ -36,7 +36,7 @@ export const guestSchema = yup.object().shape({
 
 export const newGuest = (): Guest => ({
     name: '',
-    category: 'Adult',
+    category: AccomodationCategory.Adult,
     clubMember: false,
     dietaryRequirements: []
 });

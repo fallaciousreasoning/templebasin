@@ -1,7 +1,7 @@
 {
     "liftPasses": {
         "adult": {
-            "midweek": 55,
+            "default": 55,
             "weekend": 65,
             "clubMember": 45
         },
