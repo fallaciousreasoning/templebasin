@@ -1,6 +1,6 @@
 import moment, { Moment } from "moment";
 import { useState, useMemo, useCallback } from "react";
-import { ButtonGroup, Button, makeStyles } from "@material-ui/core";
+import { ButtonGroup, Button, makeStyles, TextField } from "@material-ui/core";
 import { capitalize } from "../utils/string";
 
 export type Period = "day" | "week" | "month" | "year";
@@ -37,6 +37,7 @@ export default (props: Props) => {
 
     const nextPeriod = useCallback(() => setDate(moment(date).add(1, period)), [date, period]);
     const prevPeriod = useCallback(() => setDate(moment(date).subtract(1, period)), [date, period]);
+    const setPeriodTo = useCallback(e => setDate(moment(e.target.value, 'YYYY-MM-DD')), [setPeriod]);
 
     const from = useMemo(() => moment(date).startOf(period), [date, period]);
     const to = useMemo(() => moment(date).endOf(period), [date, period]);
@@ -51,7 +52,11 @@ export default (props: Props) => {
             </div>
             <div className={styles.spacer} />
             <div>
-                {capitalize(period)} of {date.format('DD-MM-YYYY')}
+                <TextField
+                    label={capitalize(period) + " of"}
+                    type="date"
+                    value={date.format('YYYY-MM-DD')}
+                    onChange={setPeriodTo} />
             </div>
             <div className={styles.spacer} />
             <div>
