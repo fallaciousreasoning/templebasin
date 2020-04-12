@@ -33,7 +33,7 @@ export interface PriceInfoBase {
 }
 
 export interface PriceInfo extends PriceInfoBase {
-    isPerDay?: boolean;
+    perDay?: boolean;
 
     adult?: PriceInfoBase | number;
     student?: PriceInfoBase | number;
@@ -88,7 +88,7 @@ const priceForStay = (guest: Guest, booking: BookingInfo, prices: Prices) => {
     const { selfCatered, duration, includeLiftTickets } = booking;
     let total = 0;
     const addPriceForDays = (days: number, scheme: PriceInfo) =>
-        total += (scheme.isPerDay ? days : 1) * determinePrice(guest, scheme);
+        total += (scheme.perDay ? days : 1) * determinePrice(guest, scheme);
 
     if (includeLiftTickets) {
         const packageIndex = duration - 1;
@@ -101,7 +101,7 @@ const priceForStay = (guest: Guest, booking: BookingInfo, prices: Prices) => {
     } else {
         addPriceForDays(duration, prices.dbb);
     }
-    
+
     return total;
 }
 
