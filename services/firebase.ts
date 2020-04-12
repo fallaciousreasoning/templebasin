@@ -1,17 +1,8 @@
-import * as firebase from 'firebase';
+import * as admin from 'firebase';
 
 const config = require('../firebase.config.json');
 
-if (!firebase.apps.length)
-    firebase.initializeApp(config);
+if (!admin.apps.length)
+    admin.initializeApp(config);
 
-export const database = firebase.database();
-
-export const ensureLoggedIn = async () => {
-    const auth = firebase.auth();
-
-    if (!auth.currentUser)
-        await auth.signInAnonymously();
-        
-    return auth.currentUser;
-}
+export const database = admin.database();

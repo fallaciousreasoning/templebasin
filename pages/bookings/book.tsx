@@ -1,13 +1,12 @@
 import moment from 'moment';
 import { useRouter } from 'next/dist/client/router';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { ensureLoggedIn } from '../../client-services/firebase';
 import BookingEditor from '../../components/BookingEditor';
 import Layout from '../../components/Layout';
 import { BookingInfo } from '../../model/bookingInfo';
-import { updateBooking } from '../../services/bookings';
-import { noLodgeChoice } from '../../model/lodge';
-import { ensureLoggedIn } from '../../services/firebase';
 import { AccomodationCategory } from '../../model/guest';
+import { noLodgeChoice } from '../../model/lodge';
 
 const initialBooking: BookingInfo = {
     startDate: moment().add(1, 'day').format('YYYY-MM-DD'),
@@ -43,8 +42,11 @@ const Book = () => {
             return;
         }
 
-        const bookingId = await updateBooking(booking);
-        router.replace(`/bookings/${bookingId}`);
+        const json = await fetch(`/api/bookings/new`, {
+            method: 'POST',
+            body: JSON.stringify(booking)
+        }).then(r => r.json());
+        router.replace(`/bookings/${json.id}`);
     }, []);
 
     useEffect(() => {

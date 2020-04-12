@@ -16,6 +16,6 @@ export default async (req: ApiRequest<{ bookingId: string }>, res: ServerRespons
         res.statusCode = 204;
         res.end();
     } else {
-        notFound(res);
+        notFound(res); 
     }
 }
