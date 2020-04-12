@@ -3,7 +3,7 @@ import { AppBar, Toolbar, IconButton, makeStyles, Typography, Button, Paper, Dra
 import MenuIcon from '@material-ui/icons/Menu';
 import { useState, useCallback } from "react";
 import { useRouter } from "next/dist/client/router";
-import Link from 'next/link';
+import ListItemLink from "./ListItemLink";
 
 interface Props {
     title?: string;
@@ -60,21 +60,21 @@ export default (props: Props) => {
         <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
             <div className={classes.drawer}>
                 <List>
-                    <ListItem button>
-                        <ListItemText primary={<Link href="/admin/overview">Overview</Link>}/>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemText primary={<Link href="/admin/beds">Beds</Link>}/>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary={<Link href="/bookings">Bookings</Link>}/>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary={<Link href="/bookings/book">New Booking</Link>}/>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary={<Link href="/admin/lodges">Lodges</Link>}/>
-                    </ListItem>
+                    <ListItemLink href="/admin/overview">
+                        <ListItemText primary="Overview"/>
+                    </ListItemLink>
+                    <ListItemLink href="/admin/beds">
+                        <ListItemText primary="Beds"/>
+                    </ListItemLink>
+                    <ListItemLink href="/admin/lodges">
+                        <ListItemText primary="Lodges"/>
+                    </ListItemLink>
+                    <ListItemLink href="/bookings">
+                        <ListItemText primary="Bookings"/>
+                    </ListItemLink>
+                    <ListItemLink href="/bookings/book">
+                        <ListItemText primary="New Booking"/>
+                    </ListItemLink>
                 </List>
             </div>
         </Drawer>
