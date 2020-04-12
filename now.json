@@ -1,0 +1,5 @@
+{
+    "env": {
+        "FIREBASE_CONFIG": "@firebase-config"
+    }
+}
