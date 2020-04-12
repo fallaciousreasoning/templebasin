@@ -1,8 +1,8 @@
-import { BookingInfo, bookingSchema } from "../model/bookingInfo";
-import { getLodges } from "./lodges";
 import moment from "moment";
-import { getBookingsInRange, getNumGuests } from "./bookings";
+import { BookingInfo, getNumGuests } from "../model/bookingInfo";
 import { Lodge } from "../model/lodge";
+import { getBookingsInRange } from "./bookings";
+import { getLodges } from "./lodges";
 
 export type MinInfoForRoom = Pick<BookingInfo, 'startDate' | 'duration' | 'guests' | 'preferredLodge'>;
 

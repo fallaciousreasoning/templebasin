@@ -2,12 +2,13 @@ import { ApiRequest } from "../../model/apiRequest";
 import { ServerResponse } from "http";
 import queryString from 'query-string';
 import moment from "moment";
-import { getBookingsOnDay, getCheckinDate, getCheckoutDate, getNumGuests, notCheckingOutOn } from "../../services/bookings";
+import { getBookingsOnDay } from "../../services/bookings";
 import { jsonResponse } from "../../utils/response";
 import { getLodges } from "../../services/lodges";
 import { Lodge } from "../../model/lodge";
 import { BedInfo } from "../../model/bedInfo";
 import range from "../../utils/range";
+import { notCheckingOutOn, getNumGuests, getCheckinDate, getCheckoutDate } from "../../model/bookingInfo";
 
 // Request should look like this:
 //    //   /beds?on=YYYY-MM-DD

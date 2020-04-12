@@ -1,6 +1,7 @@
 import { Moment } from "moment";
-import { getBookingsInRange, notCheckingOutOn, getNumGuests } from "./bookings";
+import { getBookingsInRange } from "./bookings";
 import { getLodges } from "./lodges";
+import { notCheckingOutOn, getNumGuests } from "../model/bookingInfo";
 
 export const getOccupancyInfo = async (from: Moment, to: Moment) => {
     const notCheckingOut = notCheckingOutOn(to);
