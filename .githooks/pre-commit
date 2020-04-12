@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+alias rs='rg --no-heading --column'
+RESULT=$(rg --no-heading --column -g 'pages/**' -g '!pages/api/*' "/services" | wc -l)
+
+if [ $RESULT -eq 0 ]
+then
+  exit 0
+else
+  echo "$RESULT pages import from /services!"
+  echo "Run the following command:"
+  echo "\trg -g 'pages/**' -g '!pages/api/*' '/services'"
+  echo "to see which."
+  exit 1
+fi
