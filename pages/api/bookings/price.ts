@@ -3,7 +3,7 @@ import { ServerResponse } from "http";
 import { notFound, jsonResponse } from "../../../utils/response";
 import { BookingInfo, bookingSchema } from "../../../model/bookingInfo";
 import { json } from "../../../utils/request";
-import { calculatePrice } from "../../../model/priceInfo";
+import { calculatePrice } from "../../../services/pricing";
 
 export default async (req: ApiRequest, res: ServerResponse) => {
     if (req.method !== "POST") {

@@ -1,5 +1,6 @@
 import { database } from "./firebase";
-import { PriceInfo, Prices } from "../model/priceInfo";
+import { PriceInfo, Prices, priceForStay } from "../model/priceInfo";
+import { BookingInfo } from "../model/bookingInfo";
 
 const defaultPrices = require('../data/priceData.json') as Prices;
 
@@ -24,4 +25,16 @@ export const updatePrices = async (prices: Partial<Prices>) => {
 
     await database.ref(`${pricesPath}`).set(prices);
     return prices as Prices;
+}
+
+export const calculatePrice = async (booking: BookingInfo) => {
+    const prices = await getPrices();
+    let total = 0;
+
+    for (const guest of booking.guests) {
+        const guestCost = priceForStay(guest, booking, prices);
+        total += guestCost;
+    }
+
+    return total;
 }

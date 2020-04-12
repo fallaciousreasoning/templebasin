@@ -16,7 +16,7 @@ then
 else
   echo "$RESULT pages import from /services!"
   echo "Run the following command:"
-  echo "\trg -g -g 'model/**' 'pages/**' -g '!pages/api/*' '/services'"
+  echo "\trg -g 'model/**' -g 'pages/**' -g '!pages/api/*' '/services'"
   echo "to see which."
   exit 1
 fi

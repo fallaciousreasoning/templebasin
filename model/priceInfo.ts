@@ -1,6 +1,5 @@
 import { BookingInfo } from "./bookingInfo";
-import { Guest, AccomodationCategory } from "./guest";
-import { getPrices } from "../services/pricing";
+import { Guest } from "./guest";
 
 export interface Prices {
     liftPasses: PriceInfo;
@@ -84,7 +83,7 @@ export const determinePrice = (guest: Guest, price: PriceInfo) => {
     return rate;
 }
 
-const priceForStay = (guest: Guest, booking: BookingInfo, prices: Prices) => {
+export const priceForStay = (guest: Guest, booking: BookingInfo, prices: Prices) => {
     const { selfCatered, duration, includeLiftTickets } = booking;
     let total = 0;
     const addPriceForDays = (days: number, scheme: PriceInfo) =>
@@ -100,18 +99,6 @@ const priceForStay = (guest: Guest, booking: BookingInfo, prices: Prices) => {
         addPriceForDays(duration, prices.accomodationOnly);
     } else {
         addPriceForDays(duration, prices.dbb);
-    }
-
-    return total;
-}
-
-export const calculatePrice = async (booking: BookingInfo) => {
-    const prices = await getPrices();
-    let total = 0;
-
-    for (const guest of booking.guests) {
-        const guestCost = priceForStay(guest, booking, prices);
-        total += guestCost;
     }
 
     return total;
