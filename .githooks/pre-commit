@@ -8,7 +8,7 @@
 # To enable this hook, rename this file to "pre-commit".
 
 alias rs='rg --no-heading --column'
-RESULT=$(rg --no-heading --column -g 'pages/**' -g '!pages/api/*' "/services" | wc -l)
+RESULT=$(rg --no-heading --column -g 'model/**' -g 'pages/**' -g '!pages/api/*' "/services" | wc -l)
 
 if [ $RESULT -eq 0 ]
 then
@@ -16,7 +16,7 @@ then
 else
   echo "$RESULT pages import from /services!"
   echo "Run the following command:"
-  echo "\trg -g 'pages/**' -g '!pages/api/*' '/services'"
+  echo "\trg -g -g 'model/**' 'pages/**' -g '!pages/api/*' '/services'"
   echo "to see which."
   exit 1
 fi
