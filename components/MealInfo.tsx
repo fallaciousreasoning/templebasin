@@ -1,8 +1,5 @@
-import { BookingInfo, daysInRange } from "../model/bookingInfo";
-import { DietaryRequirement } from "../model/guest";
-import moment, { Moment } from "moment";
-import { getCheckinDate, getCheckoutDate } from "../services/bookings";
-import bookings from "../pages/bookings";
+import { Moment } from "moment";
+import { BookingInfo, daysInRange, getCheckinDate, getCheckoutDate } from "../model/bookingInfo";
 
 type MealInfo = { guests: number } & {
     [requirement: string]: number;

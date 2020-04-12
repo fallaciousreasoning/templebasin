@@ -1,29 +1,16 @@
-import { database } from "./firebase"
-import { BookingInfo } from "../model/bookingInfo";
-import { useState, useEffect } from "react";
 import moment, { Moment } from 'moment';
+import { BookingInfo } from "../model/bookingInfo";
+import { database } from "./firebase";
 import { assignRoom } from "./room";
-import useData from "./useData";
 
 export const bookingsPath = '/bookings';
-
-export const getNumGuests = (booking: Pick<BookingInfo, 'guests'>) => {
-    return booking.guests.length;
-}
-
-export const getCheckinDate = (booking: BookingInfo) => {
-    return moment(booking.startDate);
-}
-
-export const getCheckoutDate = (booking: BookingInfo) => {
-    return getCheckinDate(booking).add(booking.duration, 'days');
-}
 
 const cleanBooking = (booking: BookingInfo) => {
     for (const guest of booking.guests)
         guest.dietaryRequirements = guest.dietaryRequirements || [];
     return booking;
 }
+
 export const getBookings = async () => {
     const bookings = await database.ref(bookingsPath)
         .orderByChild('startDate')
@@ -49,13 +36,6 @@ export const getBookingsInRange = async (minDate: Moment, maxDate: Moment) => {
 
 export const getBookingsOnDay = async (day: Moment) => getBookingsInRange(moment(day).startOf('day'), moment(day).endOf('day'));
 
-export const notCheckingOutOn = (day: Moment) => (booking: BookingInfo) => !getCheckoutDate(booking).isSame(day, 'day');
-
-export const isOnDay = (booking: BookingInfo, day: Moment) => {
-    return moment(booking.startDate).isSameOrBefore(day)
-        && moment(booking.startDate).add(booking.duration, 'days').isSameOrAfter(day);
-}
-
 export const getBooking = async (bookingId: string): Promise<BookingInfo> => {
     const value: BookingInfo = await database.ref(`${bookingsPath}/${bookingId}`)
         .once('value')
@@ -65,10 +45,6 @@ export const getBooking = async (bookingId: string): Promise<BookingInfo> => {
         return null;
 
     return cleanBooking(value);
-}
-
-export const useBooking = (bookingId: string) => {
-    return useData<BookingInfo>(`/api/bookings/${bookingId}`);
 }
 
 export const updateBooking = async (booking: BookingInfo) => {

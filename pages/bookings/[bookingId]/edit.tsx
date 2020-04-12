@@ -5,7 +5,7 @@ import BookingEditor from "../../../components/BookingEditor"
 import Layout from "../../../components/Layout"
 import Loader from "../../../components/Loader"
 import { useQuery } from "../../../model/routeProps"
-import { useBooking } from "../../../services/bookings"
+import { useBooking } from "../../../model/bookingInfo"
 
 const useStyles = makeStyles(theme => ({
     progress: {

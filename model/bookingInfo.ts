@@ -1,7 +1,7 @@
 import { Guest, guestSchema } from "./guest";
 import * as yup from 'yup';
 import moment, { Moment } from "moment";
-import { getCheckinDate, getCheckoutDate } from "../services/bookings";
+import useData from "../services/useData";
 
 export interface BookingInfo {
     id?: string;
@@ -68,4 +68,27 @@ export const daysInRange = (booking: BookingInfo, from: Moment, to: Moment) => {
 
     const days = end.diff(start, 'days');
     return Math.max(0, days);
+}
+
+export const useBooking = (bookingId: string) => {
+    return useData<BookingInfo>(`/api/bookings/${bookingId}`);
+}
+
+export const isOnDay = (booking: BookingInfo, day: Moment) => {
+    return moment(booking.startDate).isSameOrBefore(day)
+        && moment(booking.startDate).add(booking.duration, 'days').isSameOrAfter(day);
+}
+
+export const notCheckingOutOn = (day: Moment) => (booking: BookingInfo) => !getCheckoutDate(booking).isSame(day, 'day');
+
+export const getNumGuests = (booking: Pick<BookingInfo, 'guests'>) => {
+    return booking.guests.length;
+}
+
+export const getCheckinDate = (booking: BookingInfo) => {
+    return moment(booking.startDate);
+}
+
+export const getCheckoutDate = (booking: BookingInfo) => {
+    return getCheckinDate(booking).add(booking.duration, 'days');
 }
