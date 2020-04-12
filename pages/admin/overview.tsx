@@ -6,9 +6,9 @@ import Loader from "../../components/Loader";
 import OccupancyBreakdown from "../../components/OccupancyBreakdown";
 import PeriodView from "../../components/PeriodView";
 import { BookingInfo } from "../../model/bookingInfo";
-import useData from "../../services/useData";
+import useData from "../../utils/useData";
 import round from "../../utils/round";
-import { getNumGuests } from "../../services/bookings";
+import { getNumGuests } from "../../model/bookingInfo";
 import MealInfo from "../../components/MealInfo";
 
 const useStyles = makeStyles(theme => ({

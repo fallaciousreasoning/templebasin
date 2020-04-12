@@ -1,14 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 import MaterialTable from 'material-table';
 import { Moment } from "moment";
-import { useMemo } from "react";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import PeriodView, { Period } from "../../components/PeriodView";
 import { BedInfo } from "../../model/bedInfo";
-import { Lodge } from "../../model/lodge";
-import useData from "../../services/useData";
 import { OccupancyInfo } from "../../model/occupancyInfo";
+import useData from "../../utils/useData";
 
 const periods: Period[] = ['day'];
 

@@ -1,5 +1,4 @@
 import { IncomingMessage, ServerResponse } from "http"
-import { database } from "../../../services/firebase";
 import { getLodges, updateLodge } from "../../../services/lodges";
 import { jsonResponse } from "../../../utils/response";
 

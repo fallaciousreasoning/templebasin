@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import BookingView from "../../components/BookingView";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
-import useData from "../../services/useData";
+import useData from "../../utils/useData";
 import { BookingInfo } from "../../model/bookingInfo";
 
 export default () => {

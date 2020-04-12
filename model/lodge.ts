@@ -1,4 +1,4 @@
-import useData from "../services/useData"
+import useData from "../utils/useData"
 
 export interface Lodge {
     id?: string;

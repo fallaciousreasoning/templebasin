@@ -1,6 +1,6 @@
 import { Doughnut } from "react-chartjs-2"
 import { useState, useEffect, useMemo } from "react";
-import useData from "../services/useData";
+import useData from "../utils/useData";
 import { Moment } from "moment";
 import { OccupancyInfo } from "../model/occupancyInfo";
 
