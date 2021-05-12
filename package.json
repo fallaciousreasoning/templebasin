@@ -15,7 +15,7 @@
     "@types/chartjs": "0.0.31",
     "@types/react-chartjs-2": "^2.5.7",
     "@types/yup": "^0.26.34",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "child-process": "^1.0.2",
     "firebase": "^7.13.1",
     "firebase-admin": "^8.10.0",
